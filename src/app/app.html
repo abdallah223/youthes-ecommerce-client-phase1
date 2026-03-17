@@ -1,0 +1,13 @@
+@let isAdminRoute = (isAdminRoute$ | async) ?? false;
+
+@if (!isAdminRoute) {
+  <app-navbar />
+}
+
+<main [class.main-content]="!isAdminRoute">
+  <router-outlet />
+</main>
+
+@if (!isAdminRoute) {
+  <app-footer />
+}
