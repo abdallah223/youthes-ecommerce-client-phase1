@@ -1,0 +1,105 @@
+/* ── Design Tokens ───────────────────────────────────────────── */
+/* Aesthetic: Clean luxury minimal — editorial calm             */
+/* Fonts: Cormorant Garamond (display) + DM Sans (body)         */
+
+:root {
+  /* ── Colors ─────────────────────────────────────────────────── */
+  --color-white:        #FAFAF8;
+  --color-surface:      #F5F4F0;
+  --color-border:       #E8E6E1;
+  --color-border-dark:  #C9C6BE;
+  --color-muted:        #9B9690;
+  --color-secondary:    #6B6760;
+  --color-text:         #1E1C1A;
+  --color-black:        #111110;
+
+  --color-accent:       #B8956A;
+  --color-accent-light: #D4B896;
+  --color-accent-dark:  #8F6F4A;
+
+  --color-success:      #4A7C59;
+  --color-warning:      #C17B2E;
+  --color-error:        #B84444;
+  --color-info:         #3A6B8A;
+
+  --color-overlay:      rgba(17, 17, 16, 0.50);
+  --color-overlay-dark: rgba(17, 17, 16, 0.75);
+
+  /* ── Typography ─────────────────────────────────────────────── */
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-body:    'DM Sans', 'Helvetica Neue', sans-serif;
+
+  --text-xs:   0.75rem;
+  --text-sm:   0.875rem;
+  --text-base: 1rem;
+  --text-md:   1.125rem;
+  --text-lg:   1.25rem;
+  --text-xl:   1.5rem;
+  --text-2xl:  1.875rem;
+  --text-3xl:  2.25rem;
+  --text-4xl:  3rem;
+  --text-5xl:  4rem;
+
+  --weight-light:    300;
+  --weight-regular:  400;
+  --weight-medium:   500;
+  --weight-semibold: 600;
+
+  --leading-tight:   1.2;
+  --leading-snug:    1.4;
+  --leading-normal:  1.6;
+  --leading-relaxed: 1.8;
+
+  --tracking-tight:   -0.03em;
+  --tracking-normal:   0;
+  --tracking-wide:     0.06em;
+  --tracking-widest:   0.12em;
+
+  /* ── Spacing ────────────────────────────────────────────────── */
+  --space-1:  0.25rem;
+  --space-2:  0.5rem;
+  --space-3:  0.75rem;
+  --space-4:  1rem;
+  --space-5:  1.25rem;
+  --space-6:  1.5rem;
+  --space-8:  2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+
+  /* ── Layout ─────────────────────────────────────────────────── */
+  --container-md:  768px;
+  --container-lg:  1024px;
+  --container-xl:  1280px;
+  --container-2xl: 1440px;
+
+  --navbar-height: 64px;
+
+  /* ── Borders ────────────────────────────────────────────────── */
+  --radius-sm:   2px;
+  --radius-md:   4px;
+  --radius-lg:   8px;
+  --radius-xl:   12px;
+  --radius-full: 9999px;
+
+  /* ── Shadows ────────────────────────────────────────────────── */
+  --shadow-xs: 0 1px 2px  rgba(17, 17, 16, 0.06);
+  --shadow-sm: 0 2px 8px  rgba(17, 17, 16, 0.08);
+  --shadow-md: 0 4px 16px rgba(17, 17, 16, 0.10);
+  --shadow-lg: 0 8px 32px rgba(17, 17, 16, 0.12);
+  --shadow-xl: 0 16px 48px rgba(17, 17, 16, 0.14);
+
+  /* ── Transitions ────────────────────────────────────────────── */
+  --transition-fast:   150ms ease;
+  --transition-base:   250ms ease;
+  --transition-slow:   400ms ease;
+  --transition-slower: 600ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+  /* ── Z-index ────────────────────────────────────────────────── */
+  --z-dropdown: 100;
+  --z-sticky:   200;
+  --z-overlay:  300;
+  --z-modal:    400;
+}
