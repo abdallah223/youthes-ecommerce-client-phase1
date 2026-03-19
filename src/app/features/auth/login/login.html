@@ -1,0 +1,62 @@
+<div class="auth-page">
+  <div class="auth-card page-enter">
+    <div class="auth-header">
+      <h1 class="auth-title">Welcome back</h1>
+      <p class="auth-subtitle">Sign in to your account to continue</p>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="submit()" novalidate class="auth-form">
+      @if (errorMessage) {
+        <div class="alert alert--error">{{ errorMessage }}</div>
+      }
+
+      <div class="form-group">
+        <label class="form-label">Email Address</label>
+        <input
+          type="email"
+          formControlName="email"
+          class="form-input"
+          [class.is-error]="emailControl.invalid && emailControl.touched"
+          placeholder="you@example.com"
+          autocomplete="email" />
+        @if (emailControl.invalid && emailControl.touched) {
+          <span class="form-error">Please enter a valid email address</span>
+        }
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <div class="input-wrap">
+          <input
+            [type]="showPassword ? 'text' : 'password'"
+            formControlName="password"
+            class="form-input"
+            [class.is-error]="passwordControl.invalid && passwordControl.touched"
+            placeholder="********"
+            autocomplete="current-password" />
+          <button type="button" class="input-toggle" (click)="showPassword = !showPassword" tabindex="-1">
+            {{ showPassword ? 'Hide' : 'Show' }}
+          </button>
+        </div>
+        @if (passwordControl.invalid && passwordControl.touched) {
+          <span class="form-error">Password is required</span>
+        }
+      </div>
+
+      <button
+        type="submit"
+        class="btn btn--primary btn--full"
+        [class.btn--loading]="isLoading"
+        [disabled]="isLoading">
+        @if (!isLoading) {
+          <span>Sign In</span>
+        }
+      </button>
+    </form>
+
+    <p class="auth-footer">
+      Don't have an account?
+      <a routerLink="/register" class="auth-link">Create one</a>
+    </p>
+  </div>
+</div>
