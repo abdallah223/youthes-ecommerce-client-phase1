@@ -1,0 +1,106 @@
+<div class="auth-page">
+  <div class="auth-card page-enter">
+    <div class="auth-header">
+      <h1 class="auth-title">Create account</h1>
+      <p class="auth-subtitle">Join Youthes and start shopping</p>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="submit()" novalidate class="auth-form">
+      @if (errorMessage) {
+        <div class="alert alert--error">{{ errorMessage }}</div>
+      }
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Full Name</label>
+          <input
+            type="text"
+            formControlName="fullName"
+            class="form-input"
+            [class.is-error]="f.fullName.invalid && f.fullName.touched"
+            placeholder="Your full name" />
+          @if (f.fullName.invalid && f.fullName.touched) {
+            <span class="form-error">At least 2 characters required</span>
+          }
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Gender</label>
+          <select
+            formControlName="gender"
+            class="form-select"
+            [class.is-error]="f.gender.invalid && f.gender.touched">
+            <option value="">Select gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </select>
+          @if (f.gender.invalid && f.gender.touched) {
+            <span class="form-error">Please select a gender</span>
+          }
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Email Address</label>
+        <input
+          type="email"
+          formControlName="email"
+          class="form-input"
+          [class.is-error]="f.email.invalid && f.email.touched"
+          placeholder="you@example.com"
+          autocomplete="email" />
+        @if (f.email.invalid && f.email.touched) {
+          <span class="form-error">Please enter a valid email address</span>
+        }
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Phone Number</label>
+        <input
+          type="tel"
+          formControlName="phone"
+          class="form-input"
+          [class.is-error]="f.phone.invalid && f.phone.touched"
+          placeholder="01XXXXXXXXX" />
+        @if (f.phone.invalid && f.phone.touched) {
+          <span class="form-error">Please enter a valid Egyptian phone number</span>
+        }
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <div class="input-wrap">
+          <input
+            [type]="showPassword ? 'text' : 'password'"
+            formControlName="password"
+            class="form-input"
+            [class.is-error]="f.password.invalid && f.password.touched"
+            placeholder="Min 8 chars, upper + lower + number" />
+          <button type="button" class="input-toggle" (click)="showPassword = !showPassword" tabindex="-1">
+            {{ showPassword ? 'Hide' : 'Show' }}
+          </button>
+        </div>
+        @if (f.password.invalid && f.password.touched) {
+          <span class="form-error">Min 8 characters with uppercase, lowercase and a number</span>
+        }
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">
+          Address <span class="form-hint">(Optional - used as default delivery address)</span>
+        </label>
+        <input type="text" formControlName="address" class="form-input" placeholder="Street, area, city" />
+      </div>
+
+      <button type="submit" class="btn btn--primary btn--full" [class.btn--loading]="isLoading" [disabled]="isLoading">
+        @if (!isLoading) {
+          <span>Create Account</span>
+        }
+      </button>
+    </form>
+
+    <p class="auth-footer">
+      Already have an account? <a routerLink="/login" class="auth-link">Sign in</a>
+    </p>
+  </div>
+</div>
