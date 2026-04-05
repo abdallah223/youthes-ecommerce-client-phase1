@@ -1,0 +1,49 @@
+<footer class="footer">
+  <div class="footer__inner container">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <a routerLink="/" class="footer__logo">Youthes</a>
+        <p class="footer__tagline">
+          Contemporary fashion for the modern generation.
+        </p>
+      </div>
+
+      <div class="footer__columns">
+        <div class="footer__col">
+          <h4 class="footer__col-title">Shop</h4>
+          <a routerLink="/products" class="footer__col-link">All Products</a>
+          <a
+            routerLink="/products"
+            [queryParams]="{ sort: 'newest' }"
+            class="footer__col-link"
+            >New Arrivals</a
+          >
+        </div>
+        <div class="footer__col">
+          <h4 class="footer__col-title">Info</h4>
+          <a routerLink="/about" class="footer__col-link">About Us</a>
+          <a routerLink="/faq" class="footer__col-link">FAQ</a>
+          <a routerLink="/testimonials" class="footer__col-link">Reviews</a>
+          <a routerLink="/contact" class="footer__col-link">Contact Us</a>
+        </div>
+        <div class="footer__col">
+          <h4 class="footer__col-title">Account</h4>
+          @if (isLoggedIn$ | async) {
+          <a routerLink="/orders" class="footer__col-link">My Orders</a>
+          <a routerLink="/profile" class="footer__col-link">Profile</a>
+          } @else {
+          <a routerLink="/login" class="footer__col-link">Login</a>
+          <a routerLink="/register" class="footer__col-link">Register</a>
+          }
+        </div>
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      <p class="footer__copy">
+        &copy; {{ currentYear }} Youthes. All rights reserved.
+      </p>
+      <p class="footer__note">Cash on delivery · Egypt-wide shipping</p>
+    </div>
+  </div>
+</footer>
