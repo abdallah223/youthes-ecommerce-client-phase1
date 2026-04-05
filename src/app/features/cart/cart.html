@@ -1,0 +1,128 @@
+<div class="container cart-page">
+  <h1 class="page-title">Shopping Cart</h1>
+
+  @if (isLoading) {
+    <app-loading />
+  } @else {
+    @if (!isLoggedIn) {
+      @if (!guestItems.length) {
+        <div class="empty-state">
+          <p class="empty-state__icon">Cart</p>
+          <h2 class="empty-state__title">Your cart is empty</h2>
+          <p class="empty-state__text">Looks like you haven't added anything yet.</p>
+          <a routerLink="/products" class="btn btn--primary">Start Shopping</a>
+        </div>
+      } @else {
+        <div class="cart-layout">
+          <div class="cart-items">
+            <div class="alert alert--info login-nudge">
+              <div>
+                Your cart is saved locally.
+                <a routerLink="/login" class="nudge-link">Sign in</a> or
+                <a routerLink="/register" class="nudge-link">create an account</a>
+                to checkout.
+              </div>
+            </div>
+
+            @for (item of guestItems; track item.product._id) {
+              <div class="cart-item">
+                <img [src]="productService.getImageUrl(item.product.image)" [alt]="item.product.name" class="cart-item__image" />
+                <div class="cart-item__info">
+                  <a [routerLink]="['/products', item.product.slug]" class="cart-item__name">{{ item.product.name }}</a>
+                  <p class="cart-item__price">EGP {{ item.product.price | number:'1.0-0' }}</p>
+                </div>
+                <div class="cart-item__qty">
+                  <button class="qty-btn" (click)="onGuestUpdateQuantity(item, item.quantity - 1)" [disabled]="item.quantity <= 1">-</button>
+                  <span class="qty-value">{{ item.quantity }}</span>
+                  <button class="qty-btn" (click)="onGuestUpdateQuantity(item, item.quantity + 1)" [disabled]="item.quantity >= item.product.stockCount">+</button>
+                </div>
+                <p class="cart-item__subtotal">EGP {{ item.subtotal | number:'1.0-0' }}</p>
+                <button class="cart-item__remove" (click)="onGuestRemoveItem(item)" aria-label="Remove">X</button>
+              </div>
+            }
+          </div>
+
+          <aside class="cart-summary">
+            <h2 class="cart-summary__title">Order Summary</h2>
+            <div class="cart-summary__rows">
+              <div class="summary-row">
+                <span>Subtotal ({{ guestItemCount }} items)</span>
+                <span>EGP {{ guestSubtotal | number:'1.0-0' }}</span>
+              </div>
+              <div class="summary-row">
+                <span>Shipping</span>
+                <span>Calculated at checkout</span>
+              </div>
+            </div>
+            <a routerLink="/login" [queryParams]="{ returnUrl: '/checkout' }" class="btn btn--primary btn--full">
+              Sign In to Checkout
+            </a>
+            <a routerLink="/register" class="btn btn--outline btn--full" style="margin-top: 8px">
+              Create Account
+            </a>
+          </aside>
+        </div>
+      }
+    } @else {
+      @if (cart$ | async; as cart) {
+        @if (!cart.items.length) {
+          <div class="empty-state">
+            <p class="empty-state__icon">Cart</p>
+            <h2 class="empty-state__title">Your cart is empty</h2>
+            <p class="empty-state__text">Looks like you haven't added anything yet.</p>
+            <a routerLink="/products" class="btn btn--primary">Start Shopping</a>
+          </div>
+        } @else {
+          <div class="cart-layout">
+            <div class="cart-items">
+              @if (cart.hasPriceChanges) {
+                <div class="alert alert--warning price-alert">
+                  <div>
+                    <strong>Prices have changed</strong> for some items.
+                    <button class="price-alert__btn" (click)="onConfirmAllPrices()">Accept all new prices</button>
+                  </div>
+                </div>
+              }
+
+              @for (item of cart.items; track item.product._id) {
+                <div [class]="isItemUpdating(item) ? 'cart-item cart-item--updating' : 'cart-item'">
+                  <img [src]="productService.getImageUrl(item.product.image)" [alt]="item.product.name" class="cart-item__image" />
+                  <div class="cart-item__info">
+                    <p class="cart-item__name">{{ item.product.name }}</p>
+                    @if (item.priceChanged) {
+                      <div class="price-changed">
+                        <span class="price-was">Was EGP {{ item.priceAtAdd | number:'1.0-0' }}</span>
+                        <span class="price-now">Now EGP {{ item.currentPrice | number:'1.0-0' }}</span>
+                      </div>
+                    } @else {
+                      <p class="cart-item__price">EGP {{ item.currentPrice | number:'1.0-0' }}</p>
+                    }
+                  </div>
+                  <div class="cart-item__qty">
+                    <button class="qty-btn" (click)="onUpdateQuantity(item, item.quantity - 1)" [disabled]="item.quantity <= 1">-</button>
+                    <span class="qty-value">{{ item.quantity }}</span>
+                    <button class="qty-btn" (click)="onUpdateQuantity(item, item.quantity + 1)" [disabled]="item.quantity >= item.product.stockCount">+</button>
+                  </div>
+                  <p class="cart-item__subtotal">EGP {{ item.subtotal | number:'1.0-0' }}</p>
+                  <button class="cart-item__remove" (click)="onRemoveItem(item)" aria-label="Remove">X</button>
+                </div>
+              }
+            </div>
+
+            <aside class="cart-summary">
+              <h2 class="cart-summary__title">Order Summary</h2>
+              <div class="cart-summary__rows">
+                <div class="summary-row"><span>Subtotal ({{ cart.itemCount }} items)</span><span>EGP {{ cart.subtotal | number:'1.0-0' }}</span></div>
+                <div class="summary-row"><span>Shipping</span><span>EGP {{ cart.shippingFee | number:'1.0-0' }}</span></div>
+                <div class="summary-row summary-row--total"><span>Total</span><span>EGP {{ cart.total | number:'1.0-0' }}</span></div>
+              </div>
+              <a routerLink="/checkout" class="btn btn--primary btn--full">Proceed to Checkout</a>
+              <a routerLink="/products" class="btn btn--ghost btn--full" style="margin-top: 8px; justify-content: center">Continue Shopping</a>
+              <p class="summary-note">Cash on delivery - Egypt-wide</p>
+            </aside>
+          </div>
+        }
+      }
+    }
+  }
+</div>
