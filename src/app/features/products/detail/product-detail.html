@@ -1,0 +1,108 @@
+@if (product$ | async; as product) {
+<div class="container">
+  <nav class="breadcrumb">
+    <a routerLink="/" class="breadcrumb__link">Home</a>
+    <span class="breadcrumb__sep">&gt;</span>
+    <a routerLink="/products" class="breadcrumb__link">Shop</a>
+    <span class="breadcrumb__sep">&gt;</span>
+    <span class="breadcrumb__current">{{ product.name }}</span>
+  </nav>
+
+  <div class="product-detail">
+    <div class="product-detail__image-wrap">
+      <img
+        [src]="getImageUrl(product.image)"
+        [alt]="product.name"
+        class="product-detail__image"
+        (error)="onImageError($event)"
+      />
+      @if (isOutOfStock(product)) {
+      <span class="product-detail__sold-out">Sold Out</span>
+      }
+    </div>
+
+    <div class="product-detail__info">
+      <p class="product-detail__category">
+        {{ product.category.name }} @if (product.subcategory) {
+        <span> - {{ product.subcategory.name }}</span>
+        }
+      </p>
+
+      <h1 class="product-detail__name">{{ product.name }}</h1>
+      <p class="product-detail__price">
+        EGP {{ product.price | number:'1.0-0' }}
+      </p>
+
+      <hr class="divider" />
+      <p class="product-detail__description">{{ product.description }}</p>
+
+      <hr class="divider" />
+      <div class="product-detail__stock">
+        @if (!isOutOfStock(product) && !isLowStock(product)) {
+        <span class="badge badge--success">In Stock</span>
+        } @if (isLowStock(product)) {
+        <span class="badge badge--warning"
+          >Only {{ product.stockCount }} left</span
+        >
+        } @if (isOutOfStock(product)) {
+        <span class="badge badge--error">Out of Stock</span>
+        }
+      </div>
+
+      @if (!isOutOfStock(product)) {
+      <div class="product-detail__actions">
+        <div class="quantity-picker">
+          <button
+            class="quantity-picker__btn"
+            (click)="decrement()"
+            [disabled]="quantity <= 1"
+          >
+            -
+          </button>
+          <span class="quantity-picker__value">{{ quantity }}</span>
+          <button
+            class="quantity-picker__btn"
+            (click)="increment(product)"
+            [disabled]="quantity >= product.stockCount"
+          >
+            +
+          </button>
+        </div>
+
+        <button
+          class="btn btn--primary btn--lg product-detail__cta"
+          [class.btn--loading]="isAdding"
+          [disabled]="isAdding || isAdded"
+          (click)="onAddToCart(product)"
+        >
+          @if (!isAdding && !isAdded) {
+          <span>Add to Cart</span>
+          } @if (isAdded) {
+          <span>Added</span>
+          }
+        </button>
+      </div>
+      } @if (errorMessage) {
+      <div class="alert alert--error" style="margin-top: 12px">
+        {{ errorMessage }}
+      </div>
+      } @if (isAdded) {
+      <a routerLink="/cart" class="view-cart-link">View cart &rarr;</a>
+      }
+
+      <div class="product-detail__meta">
+        <div class="meta-row">
+          <span>Delivery</span>
+          <span>Egypt-wide delivery - 2-5 business days</span>
+        </div>
+        <div class="meta-row">
+          <span>Payment</span>
+          <span>Cash on delivery only</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+} @else {
+<app-loading />
+}

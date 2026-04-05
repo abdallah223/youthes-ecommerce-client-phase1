@@ -1,0 +1,143 @@
+@if (categories$ | async; as categories) {
+  <div class="listing-header">
+    <div class="container">
+      <h1 class="listing-title">
+        {{ getSelectedCategory(categories)?.name || 'All Products' }}
+      </h1>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="listing-layout">
+      <aside [class]="isSidebarOpen ? 'sidebar sidebar--open' : 'sidebar'">
+        <div class="sidebar__header">
+          <h2 class="sidebar__title">Filters</h2>
+          @if (hasFilters) {
+            <button class="sidebar__clear" (click)="clearFilters()">Clear all</button>
+          }
+          <button class="sidebar__close" (click)="isSidebarOpen = false">X</button>
+        </div>
+
+        <div class="sidebar__section">
+          <h3 class="sidebar__section-title">Category</h3>
+          <div class="sidebar__options">
+            <button
+              [class]="!getCurrentParams()['category'] ? 'sidebar__option sidebar__option--active' : 'sidebar__option'"
+              (click)="setCategory()">
+              All
+            </button>
+
+            @for (category of categories; track category._id) {
+              <button
+                [class]="getCurrentParams()['category'] === category._id ? 'sidebar__option sidebar__option--active' : 'sidebar__option'"
+                (click)="setCategory(category._id)">
+                {{ category.name }}
+              </button>
+            }
+          </div>
+        </div>
+
+        @if (getSelectedCategory(categories); as selectedCategory) {
+          @if (selectedCategory.subcategories.length) {
+            <div class="sidebar__section">
+              <h3 class="sidebar__section-title">Subcategory</h3>
+              <div class="sidebar__options">
+                <button
+                  [class]="!getCurrentParams()['subcategory'] ? 'sidebar__option sidebar__option--active' : 'sidebar__option'"
+                  (click)="setSubcategory()">
+                  All
+                </button>
+
+                @for (subcategory of selectedCategory.subcategories; track subcategory._id) {
+                  <button
+                    [class]="getCurrentParams()['subcategory'] === subcategory._id ? 'sidebar__option sidebar__option--active' : 'sidebar__option'"
+                    (click)="setSubcategory(subcategory._id)">
+                    {{ subcategory.name }}
+                  </button>
+                }
+              </div>
+            </div>
+          }
+        }
+      </aside>
+
+      @if (isSidebarOpen) {
+        <div class="sidebar-overlay" (click)="isSidebarOpen = false"></div>
+      }
+
+      <main class="listing-main">
+        <div class="listing-toolbar">
+          <button class="toolbar__filter-btn" (click)="isSidebarOpen = true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="4" y1="6" x2="20" y2="6" />
+              <line x1="8" y1="12" x2="20" y2="12" />
+              <line x1="12" y1="18" x2="20" y2="18" />
+            </svg>
+            Filters
+            @if (hasFilters) {
+              <span class="filter-dot"></span>
+            }
+          </button>
+
+          <div class="toolbar__search">
+            <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8" />
+              <line x1="21" y1="21" x2="16.65" y2="16.65" />
+            </svg>
+            <input [formControl]="searchControl" type="search" class="search-input" placeholder="Search products..." />
+          </div>
+
+          <select class="toolbar__sort" (change)="setSort($event)" [value]="getCurrentParams()['sort'] || 'newest'">
+            @for (option of sortOptions; track option.value) {
+              <option [value]="option.value">{{ option.label }}</option>
+            }
+          </select>
+        </div>
+
+        @if (hasFilters) {
+          <div class="active-filters">
+            @if (getCurrentParams()['search']) {
+              <span class="filter-chip">
+                "{{ getCurrentParams()['search'] }}"
+                <button (click)="searchControl.setValue(''); updateQuery({ search: undefined, page: 1 })">X</button>
+              </span>
+            }
+
+            @if (getCurrentParams()['category']) {
+              <span class="filter-chip">
+                {{ getSelectedCategory(categories)?.name }}
+                <button (click)="setCategory()">X</button>
+              </span>
+            }
+          </div>
+        }
+
+        @if (productsState$ | async; as state) {
+          @if (state.products.length) {
+            <div class="products-grid">
+              @for (product of state.products; track product._id) {
+                <app-product-card [product]="product" (addToCart)="onAddToCart($event)" />
+              }
+            </div>
+          } @else {
+            <div class="empty-state">
+              <p class="empty-state__icon">Search</p>
+              <h3 class="empty-state__title">No products found</h3>
+              <p class="empty-state__text">Try adjusting your filters or search term</p>
+              <button class="btn btn--outline" (click)="clearFilters()">Clear Filters</button>
+            </div>
+          }
+
+          @if (state.meta.pages > 1) {
+            <app-pagination
+              [currentPage]="state.meta.page"
+              [totalPages]="state.meta.pages"
+              (pageChange)="setPage($event)" />
+          }
+        } @else {
+          <app-loading />
+        }
+      </main>
+    </div>
+  </div>
+}
