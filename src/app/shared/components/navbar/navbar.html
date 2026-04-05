@@ -1,0 +1,174 @@
+<header [class]="navbarClass">
+  <div class="navbar__inner">
+    <a routerLink="/" class="navbar__logo" (click)="closeMobile()">Youthes</a>
+
+    <nav class="navbar__links">
+      <a routerLink="/products" routerLinkActive="active" class="navbar__link"
+        >Shop</a
+      >
+      <a routerLink="/about" routerLinkActive="active" class="navbar__link"
+        >About</a
+      >
+      <a routerLink="/faq" routerLinkActive="active" class="navbar__link"
+        >FAQ</a
+      >
+      <a
+        routerLink="/testimonials"
+        routerLinkActive="active"
+        class="navbar__link"
+        >Reviews</a
+      >
+      <a routerLink="/contact" routerLinkActive="active" class="navbar__link"
+        >Contact</a
+      >
+    </nav>
+
+    <div class="navbar__actions">
+      @if (currentUser$ | async; as user) { @if (isAdminUser(user)) {
+      <a routerLink="/admin" class="navbar__action-link">Admin</a>
+      }
+      <a routerLink="/orders" class="navbar__action-link">Orders</a>
+      <a routerLink="/profile" class="navbar__action-link navbar__user-link">
+        <span class="navbar__user-avatar">{{ userInitial(user) }}</span>
+        {{ user.fullName }}
+      </a>
+      <a routerLink="/cart" class="navbar__cart">
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+        >
+          <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
+          <line x1="3" y1="6" x2="21" y2="6" />
+          <path d="M16 10a4 4 0 01-8 0" />
+        </svg>
+        @if (itemCount$ | async; as count) {
+        <span class="navbar__cart-badge">{{ count }}</span>
+        }
+      </a>
+      <button class="navbar__action-link" (click)="logout()">Logout</button>
+      } @else {
+      <a routerLink="/cart" class="navbar__cart">
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+        >
+          <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
+          <line x1="3" y1="6" x2="21" y2="6" />
+          <path d="M16 10a4 4 0 01-8 0" />
+        </svg>
+        @if (itemCount$ | async; as count) {
+        <span class="navbar__cart-badge">{{ count }}</span>
+        }
+      </a>
+      <a routerLink="/login" class="navbar__action-link">Login</a>
+      <a routerLink="/register" class="btn btn--primary btn--sm">Register</a>
+      }
+    </div>
+
+    <button
+      class="navbar__hamburger"
+      (click)="toggleMobile()"
+      [attr.aria-expanded]="isMobileOpen"
+      aria-label="Toggle menu"
+    >
+      <span [class]="isMobileOpen ? 'hamburger hamburger--open' : 'hamburger'">
+        <span></span><span></span><span></span>
+      </span>
+    </button>
+  </div>
+
+  <div class="navbar__mobile" [class.navbar__mobile--open]="isMobileOpen">
+    <nav class="navbar__mobile-nav">
+      <a
+        routerLink="/products"
+        routerLinkActive="active"
+        class="navbar__mobile-link"
+        (click)="closeMobile()"
+        >Shop</a
+      >
+      <a
+        routerLink="/about"
+        routerLinkActive="active"
+        class="navbar__mobile-link"
+        (click)="closeMobile()"
+        >About</a
+      >
+      <a
+        routerLink="/faq"
+        routerLinkActive="active"
+        class="navbar__mobile-link"
+        (click)="closeMobile()"
+        >FAQ</a
+      >
+      <a
+        routerLink="/testimonials"
+        routerLinkActive="active"
+        class="navbar__mobile-link"
+        (click)="closeMobile()"
+        >Reviews</a
+      >
+      <a
+        routerLink="/contact"
+        routerLinkActive="active"
+        class="navbar__mobile-link"
+        (click)="closeMobile()"
+        >Contact</a
+      >
+
+      <hr class="divider" style="margin-block: 8px" />
+
+      @if (currentUser$ | async; as user) { @if (isAdminUser(user)) {
+      <a routerLink="/admin" class="navbar__mobile-link" (click)="closeMobile()"
+        >Admin Panel</a
+      >
+      }
+      <a routerLink="/cart" class="navbar__mobile-link" (click)="closeMobile()">
+        Cart @if (itemCount$ | async; as count) {
+        <span>({{ count }})</span>
+        }
+      </a>
+      <a
+        routerLink="/orders"
+        class="navbar__mobile-link"
+        (click)="closeMobile()"
+        >My Orders</a
+      >
+      <a
+        routerLink="/profile"
+        class="navbar__mobile-link"
+        (click)="closeMobile()"
+        >Profile - {{ user.fullName }}</a
+      >
+      <button
+        class="navbar__mobile-link navbar__mobile-link--btn"
+        (click)="logout()"
+      >
+        Logout
+      </button>
+      } @else {
+      <a routerLink="/cart" class="navbar__mobile-link" (click)="closeMobile()">
+        Cart @if (itemCount$ | async; as count) {
+        <span>({{ count }})</span>
+        }
+      </a>
+      <a routerLink="/login" class="navbar__mobile-link" (click)="closeMobile()"
+        >Login</a
+      >
+      <a
+        routerLink="/register"
+        class="navbar__mobile-link"
+        (click)="closeMobile()"
+        >Register</a
+      >
+      }
+    </nav>
+  </div>
+</header>
