@@ -1,0 +1,123 @@
+<section class="hero">
+  <div class="hero__content">
+    <p class="hero__eyebrow">New Collection</p>
+    <h1 class="hero__title">Dress for<br /><em>your generation</em></h1>
+    <p class="hero__body">
+      Contemporary fashion curated for the modern youth. Minimal design, maximum
+      expression.
+    </p>
+    <div class="hero__actions">
+      <a routerLink="/products" class="btn btn--primary btn--lg">Shop Now</a>
+      <a routerLink="/about" class="btn btn--outline btn--lg">Our Story</a>
+    </div>
+  </div>
+  <div class="hero__visual">
+    <div class="hero__image-wrap">
+      <img src="assets/hero.png" alt="Youthes Collection" class="hero__image" />
+      <div class="hero__pill hero__pill--1">Free Shipping</div>
+      <div class="hero__pill hero__pill--2">Cash on Delivery</div>
+    </div>
+  </div>
+</section>
+
+<div class="features-strip">
+  <div class="container">
+    <div class="features-strip__grid">
+      <div class="feature-item">
+        <span class="feature-item__icon">Delivery</span>
+        <div>
+          <p class="feature-item__title">Egypt-wide Delivery</p>
+          <p class="feature-item__text">2-5 business days</p>
+        </div>
+      </div>
+      <div class="feature-item">
+        <span class="feature-item__icon">COD</span>
+        <div>
+          <p class="feature-item__title">Cash on Delivery</p>
+          <p class="feature-item__text">Pay when you receive</p>
+        </div>
+      </div>
+      <div class="feature-item">
+        <span class="feature-item__icon">New</span>
+        <div>
+          <p class="feature-item__title">Curated Selection</p>
+          <p class="feature-item__text">Quality over quantity</p>
+        </div>
+      </div>
+      <div class="feature-item">
+        <span class="feature-item__icon">Safe</span>
+        <div>
+          <p class="feature-item__title">Secure Shopping</p>
+          <p class="feature-item__text">Your data is safe</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="section featured">
+  <div class="container">
+    <div class="section-header">
+      <div>
+        <p class="section-eyebrow">Just In</p>
+        <h2 class="section-title">New Arrivals</h2>
+      </div>
+      <a routerLink="/products" class="btn btn--outline btn--sm">View All</a>
+    </div>
+
+    @if (featuredProducts$ | async; as products) {
+    <div class="products-grid">
+      @for (product of products; track product._id) {
+      <app-product-card [product]="product" (addToCart)="onAddToCart($event)" />
+      }
+    </div>
+    } @else {
+    <app-loading />
+    }
+  </div>
+</section>
+
+<section class="section banner-section">
+  <div class="container">
+    <div class="banner">
+      <div class="banner__text">
+        <h2 class="banner__title">Your style, your story</h2>
+        <p class="banner__body">
+          Discover pieces that speak to who you are. New styles added every
+          week.
+        </p>
+        <a routerLink="/products" class="btn btn--primary"
+          >Explore Collection</a
+        >
+      </div>
+    </div>
+  </div>
+</section>
+
+@if (testimonials$ | async; as testimonials) { @if (testimonials.length) {
+<section class="section">
+  <div class="container">
+    <div class="section-header section-header--centered">
+      <p class="section-eyebrow">Reviews</p>
+      <h2 class="section-title">What our customers say</h2>
+    </div>
+
+    <div class="testimonials-grid">
+      @for (testimonial of testimonials; track testimonial._id) {
+      <div class="testimonial-card">
+        <div class="testimonial-card__stars">
+          @for (star of starRange; track star) {
+          <span
+            [class]="star <= testimonial.rating ? 'star star--filled' : 'star'"
+            >&#9733;</span
+          >
+          }
+        </div>
+        <p class="testimonial-card__text">"{{ testimonial.reviewText }}"</p>
+        <p class="testimonial-card__author">- {{ testimonial.userName }}</p>
+      </div>
+      }
+    </div>
+  </div>
+</section>
+} }
