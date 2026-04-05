@@ -1,0 +1,34 @@
+<article class="product-card" [routerLink]="['/products', product.slug]">
+  <div class="product-card__image-wrap">
+    <img
+      [src]="imageUrl"
+      [alt]="product.name"
+      class="product-card__image"
+      loading="lazy"
+      (error)="onImageError($event)"
+    />
+    <div class="product-card__overlay">
+      <button
+        class="product-card__cta"
+        (click)="$event.preventDefault(); $event.stopPropagation(); addToCart.emit(product)"
+        [disabled]="isOutOfStock"
+      >
+        {{ isOutOfStock ? 'Out of Stock' : 'Add to Cart' }}
+      </button>
+    </div>
+
+    @if (isOutOfStock) {
+    <span class="product-card__badge product-card__badge--oos">Sold Out</span>
+    } @if (isLowStock) {
+    <span class="product-card__badge product-card__badge--low"
+      >Only {{ product.stockCount }} left</span
+    >
+    }
+  </div>
+
+  <div class="product-card__info">
+    <p class="product-card__category">{{ product.category.name }}</p>
+    <h3 class="product-card__name">{{ product.name }}</h3>
+    <p class="product-card__price">EGP {{ product.price | number:'1.0-0' }}</p>
+  </div>
+</article>
