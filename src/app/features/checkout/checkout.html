@@ -1,0 +1,101 @@
+<div class="container checkout-page">
+  <h1 class="page-title">Checkout</h1>
+
+  @if (isLoading) {
+    <app-loading />
+  } @else if (cart$ | async; as cart) {
+    <div class="checkout-layout">
+      <div class="checkout-form-wrap">
+        <h2 class="checkout-section-title">Delivery Information</h2>
+
+        <form [formGroup]="form" (ngSubmit)="placeOrder()" novalidate>
+          @if (errorMessage) {
+            <div class="alert alert--error" style="margin-bottom: 20px">
+              {{ errorMessage }}
+            </div>
+          }
+
+          <div class="form-group">
+            <label class="form-label">Delivery Phone</label>
+            <input
+              type="tel"
+              formControlName="deliveryPhone"
+              class="form-input"
+              [class.is-error]="f.deliveryPhone.invalid && f.deliveryPhone.touched"
+              placeholder="01XXXXXXXXX" />
+            @if (f.deliveryPhone.invalid && f.deliveryPhone.touched) {
+              <span class="form-error">Please enter a valid Egyptian phone number</span>
+            }
+          </div>
+
+          <div class="form-group" style="margin-top: 20px">
+            <label class="form-label">Delivery Address</label>
+            <textarea
+              formControlName="deliveryAddress"
+              class="form-input checkout-textarea"
+              [class.is-error]="f.deliveryAddress.invalid && f.deliveryAddress.touched"
+              placeholder="Street, area, city, governorate"
+              rows="3"></textarea>
+            @if (f.deliveryAddress.invalid && f.deliveryAddress.touched) {
+              <span class="form-error">Please enter a full delivery address</span>
+            }
+          </div>
+
+          <div class="payment-box">
+            <span class="payment-box__icon">COD</span>
+            <div>
+              <p class="payment-box__title">Cash on Delivery</p>
+              <p class="payment-box__note">Pay when your order arrives at your door</p>
+            </div>
+            <span class="badge badge--success">Only option</span>
+          </div>
+
+          <button
+            type="submit"
+            class="btn btn--primary btn--full btn--lg"
+            [class.btn--loading]="isPlacing"
+            [disabled]="isPlacing">
+            @if (!isPlacing) {
+              <span>Place Order - EGP {{ cart.total | number:'1.0-0' }}</span>
+            }
+          </button>
+
+          <a routerLink="/cart" class="back-link">&larr; Back to cart</a>
+        </form>
+      </div>
+
+      <aside class="checkout-summary">
+        <h2 class="checkout-section-title">Order Summary</h2>
+
+        <div class="checkout-items">
+          @for (item of cart.items; track item.product._id) {
+            <div class="checkout-item">
+              <img [src]="productService.getImageUrl(item.product.image)" [alt]="item.product.name" class="checkout-item__img" />
+              <div class="checkout-item__info">
+                <p class="checkout-item__name">{{ item.product.name }}</p>
+                <p class="checkout-item__qty">Qty: {{ item.quantity }}</p>
+              </div>
+              <p class="checkout-item__price">EGP {{ item.subtotal | number:'1.0-0' }}</p>
+            </div>
+          }
+        </div>
+
+        <div class="checkout-totals">
+          <div class="total-row">
+            <span>Subtotal ({{ cart.itemCount }} items)</span>
+            <span>EGP {{ cart.subtotal | number:'1.0-0' }}</span>
+          </div>
+          <div class="total-row">
+            <span>Shipping</span>
+            <span>EGP {{ cart.shippingFee | number:'1.0-0' }}</span>
+          </div>
+          <hr class="divider" />
+          <div class="total-row total-row--final">
+            <span>Total</span>
+            <span>EGP {{ cart.total | number:'1.0-0' }}</span>
+          </div>
+        </div>
+      </aside>
+    </div>
+  }
+</div>
