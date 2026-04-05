@@ -1,0 +1,55 @@
+<div class="container orders-page">
+  <h1 class="page-title">My Orders</h1>
+
+  @if (ordersState$ | async; as state) {
+    @if (!state.orders.length) {
+      <div class="empty-state">
+        <p class="empty-state__icon">Orders</p>
+        <h2 class="empty-state__title">No orders yet</h2>
+        <p class="empty-state__text">When you place an order, it will appear here.</p>
+        <a routerLink="/products" class="btn btn--primary">Start Shopping</a>
+      </div>
+    } @else {
+      <div class="orders-list">
+        @for (order of state.orders; track order._id) {
+          <a class="order-card" [routerLink]="['/orders', order._id]">
+            <div class="order-card__header">
+              <div>
+                <p class="order-card__number">{{ order.orderNumber }}</p>
+                <p class="order-card__date">{{ order.createdAt | date:'mediumDate' }}</p>
+              </div>
+              <span [class]="'badge ' + getStatusClass(order.status)">
+                {{ getStatusLabel(order.status) }}
+              </span>
+            </div>
+
+            <div class="order-card__body">
+              <p class="order-card__items">
+                {{ order.items.length }} item{{ order.items.length !== 1 ? 's' : '' }}
+                @for (item of order.items.slice(0, 2); track item.productId) {
+                  <span> - {{ item.productName }}</span>
+                }
+                @if (order.items.length > 2) {
+                  <span> &amp; {{ order.items.length - 2 }} more</span>
+                }
+              </p>
+              <div class="order-card__footer">
+                <p class="order-card__total">EGP {{ order.totalAmount | number:'1.0-0' }}</p>
+                <span class="order-card__arrow">&rarr;</span>
+              </div>
+            </div>
+          </a>
+        }
+      </div>
+    }
+
+    @if (state.meta.pages > 1) {
+      <app-pagination
+        [currentPage]="state.meta.page"
+        [totalPages]="state.meta.pages"
+        (pageChange)="onPageChange($event)" />
+    }
+  } @else {
+    <app-loading />
+  }
+</div>

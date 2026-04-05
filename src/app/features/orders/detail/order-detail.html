@@ -1,0 +1,118 @@
+<div class="container order-detail-page">
+  <a routerLink="/orders" class="back-link">&larr; My Orders</a>
+
+  @if (order$ | async; as asyncOrder) {
+    @if (getDisplayOrder(asyncOrder); as order) {
+      <div class="order-header">
+        <div>
+          <h1 class="order-number">{{ order.orderNumber }}</h1>
+          <p class="order-date">Placed on {{ order.createdAt | date:'longDate' }}</p>
+        </div>
+        <span [class]="'badge ' + getStatusClass(order.status)">
+          {{ getStatusLabel(order.status) }}
+        </span>
+      </div>
+
+      @if (!isCancelledStatus(order.status)) {
+        <div class="progress-tracker">
+          @for (step of progressSteps; track step; let last = $last) {
+            <div class="progress-step-wrap">
+              <div [class]="isStepComplete(step, order.status) ? 'progress-step progress-step--done' : 'progress-step'">
+                <div class="progress-step__dot">
+                  @if (isStepComplete(step, order.status)) {
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3.5">
+                      <polyline points="20 6 9 17 4 12" />
+                    </svg>
+                  }
+                </div>
+                <p class="progress-step__label">{{ step }}</p>
+              </div>
+
+              @if (!last) {
+                <div [class]="isStepComplete(progressSteps[progressSteps.indexOf(step) + 1], order.status) ? 'progress-connector progress-connector--done' : 'progress-connector'"></div>
+              }
+            </div>
+          }
+        </div>
+      } @else {
+        <div class="alert alert--error" style="margin-bottom: 32px">
+          <strong>Order {{ getStatusLabel(order.status) }}</strong>
+          @if (order.cancellationReason) {
+            <span> - {{ order.cancellationReason }}</span>
+          }
+        </div>
+      }
+
+      <div class="order-grid">
+        <section class="order-section">
+          <h2 class="order-section__title">Items Ordered</h2>
+          <div class="order-items">
+            @for (item of order.items; track item.productId) {
+              <div class="order-item">
+                <img [src]="productService.getImageUrl(item.productImage)" [alt]="item.productName" class="order-item__img" />
+                <div class="order-item__info">
+                  <p class="order-item__name">{{ item.productName }}</p>
+                  <p class="order-item__meta">EGP {{ item.unitPrice | number:'1.0-0' }} x {{ item.quantity }}</p>
+                </div>
+                <p class="order-item__subtotal">EGP {{ item.subtotal | number:'1.0-0' }}</p>
+              </div>
+            }
+          </div>
+
+          <div class="order-totals">
+            <div class="order-total-row">
+              <span>Subtotal</span>
+              <span>EGP {{ getItemsSubtotal(order) | number:'1.0-0' }}</span>
+            </div>
+            <div class="order-total-row">
+              <span>Shipping</span>
+              <span>EGP {{ order.shippingFee | number:'1.0-0' }}</span>
+            </div>
+            <div class="order-total-row order-total-row--final">
+              <span>Total</span>
+              <span>EGP {{ order.totalAmount | number:'1.0-0' }}</span>
+            </div>
+          </div>
+        </section>
+
+        <div class="order-sidebar">
+          <section class="order-section">
+            <h2 class="order-section__title">Delivery Details</h2>
+            <div class="delivery-info">
+              <div class="delivery-row">
+                <span class="delivery-label">Phone</span>
+                <span class="delivery-value">{{ order.deliveryPhone }}</span>
+              </div>
+              <div class="delivery-row">
+                <span class="delivery-label">Address</span>
+                <span class="delivery-value">{{ order.deliveryAddress }}</span>
+              </div>
+              <div class="delivery-row">
+                <span class="delivery-label">Payment</span>
+                <span class="delivery-value">Cash on Delivery</span>
+              </div>
+            </div>
+          </section>
+
+          @if (order.status === 'Pending') {
+            <div class="cancel-section">
+              @if (cancelError) {
+                <div class="alert alert--error" style="margin-bottom: 12px">
+                  {{ cancelError }}
+                </div>
+              }
+              <button class="btn btn--danger btn--full" [class.btn--loading]="isCancelling" [disabled]="isCancelling" (click)="onCancelOrder(order)">
+                @if (!isCancelling) {
+                  <span>Cancel Order</span>
+                }
+              </button>
+              <p class="cancel-note">Only pending orders can be cancelled.</p>
+            </div>
+          }
+        </div>
+      </div>
+    }
+  } @else {
+    <app-loading />
+  }
+</div>

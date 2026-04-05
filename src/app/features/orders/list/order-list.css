@@ -1,0 +1,99 @@
+.orders-page { padding-block: var(--space-10); }
+
+.page-title {
+  font-family: var(--font-display);
+  font-size: var(--text-3xl);
+  font-weight: var(--weight-light);
+  letter-spacing: var(--tracking-tight);
+  color: var(--color-black);
+  margin-bottom: var(--space-8);
+}
+
+.empty-state {
+  text-align: center;
+  padding: var(--space-24) var(--space-8);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.empty-state__icon  { font-size: 3.5rem; }
+.empty-state__title { font-family: var(--font-display); font-size: var(--text-2xl); font-weight: var(--weight-regular); }
+.empty-state__text  { font-size: var(--text-sm); color: var(--color-muted); }
+
+.orders-list { display: flex; flex-direction: column; gap: var(--space-3); }
+
+.order-card {
+  display: block;
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5) var(--space-6);
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.order-card:hover {
+  border-color: var(--color-border-dark);
+  box-shadow: var(--shadow-sm);
+}
+
+.order-card__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: var(--space-4);
+}
+
+.order-card__number {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  color: var(--color-text);
+  letter-spacing: var(--tracking-wide);
+}
+
+.order-card__date {
+  font-size: var(--text-xs);
+  color: var(--color-muted);
+  margin-top: 3px;
+}
+
+.order-card__body {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.order-card__items {
+  font-size: var(--text-sm);
+  color: var(--color-secondary);
+  line-height: var(--leading-snug);
+}
+
+.order-card__footer {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  flex-shrink: 0;
+}
+
+.order-card__total {
+  font-size: var(--text-base);
+  font-weight: var(--weight-semibold);
+  color: var(--color-text);
+}
+
+.order-card__arrow {
+  font-size: var(--text-lg);
+  color: var(--color-muted);
+  transition: transform var(--transition-fast), color var(--transition-fast);
+}
+
+.order-card:hover .order-card__arrow {
+  transform: translateX(4px);
+  color: var(--color-accent);
+}
