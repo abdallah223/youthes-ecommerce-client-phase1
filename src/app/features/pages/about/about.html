@@ -1,0 +1,44 @@
+<div class="about-hero">
+  <div class="container--narrow">
+    <p class="eyebrow">Our Story</p>
+    <h1 class="about-title">
+      @if (content$ | async; as content) {
+        {{ content.title }}
+      } @else {
+        About Us
+      }
+    </h1>
+  </div>
+</div>
+
+<div class="container--narrow section">
+  @if (content$ | async; as content) {
+    <div class="about-body">
+      <p>{{ content.body }}</p>
+    </div>
+  } @else {
+    <div class="about-skeleton">
+      <div class="skeleton" style="height: 18px; margin-bottom: 10px"></div>
+      <div class="skeleton" style="height: 18px; margin-bottom: 10px; width: 88%"></div>
+      <div class="skeleton" style="height: 18px; width: 74%"></div>
+    </div>
+  }
+
+  <div class="values-grid">
+    <div class="value-card">
+      <span class="value-card__icon">*</span>
+      <h3 class="value-card__title">Quality First</h3>
+      <p class="value-card__text">Every piece is carefully selected for quality, fit, and longevity.</p>
+    </div>
+    <div class="value-card">
+      <span class="value-card__icon">*</span>
+      <h3 class="value-card__title">Youth Forward</h3>
+      <p class="value-card__text">Designed with the modern generation in mind - bold but refined.</p>
+    </div>
+    <div class="value-card">
+      <span class="value-card__icon">*</span>
+      <h3 class="value-card__title">Egypt Wide</h3>
+      <p class="value-card__text">We deliver across all of Egypt with cash on delivery for your convenience.</p>
+    </div>
+  </div>
+</div>

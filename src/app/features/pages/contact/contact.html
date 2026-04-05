@@ -1,0 +1,56 @@
+<div class="contact-hero">
+  <div class="container--narrow">
+    <p class="eyebrow">Get in Touch</p>
+    <h1 class="contact-title">Contact Us</h1>
+    <p class="contact-subtitle">We would love to hear from you.</p>
+  </div>
+</div>
+
+<div class="container--narrow section">
+  @if (content$ | async; as content) {
+  <div class="contact-grid">
+    <div class="contact-card">
+      <span class="contact-card__icon">📞</span>
+      <h3 class="contact-card__title">Phone</h3>
+      <p class="contact-card__value">{{ content.phone }}</p>
+    </div>
+
+    <div class="contact-card">
+      <span class="contact-card__icon">✉️</span>
+      <h3 class="contact-card__title">Email</h3>
+      <p class="contact-card__value">{{ content.email }}</p>
+    </div>
+
+    <div class="contact-card">
+      <span class="contact-card__icon">📍</span>
+      <h3 class="contact-card__title">Address</h3>
+      <p class="contact-card__value">{{ content.address }}</p>
+    </div>
+
+    <div class="contact-card">
+      <span class="contact-card__icon">🕐</span>
+      <h3 class="contact-card__title">Working Hours</h3>
+      <p class="contact-card__value">{{ content.workingHours }}</p>
+    </div>
+  </div>
+
+  @if (content.socialLinks.length) {
+  <div class="social-section">
+    <h2 class="social-title">Follow Us</h2>
+    <div class="social-links">
+      @for (link of content.socialLinks; track link.label) {
+      <a
+        [href]="link.url"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="social-link"
+      >
+        {{ link.label }}
+      </a>
+      }
+    </div>
+  </div>
+  } } @else {
+  <app-loading />
+  }
+</div>

@@ -1,0 +1,37 @@
+<div class="faq-hero">
+  <div class="container--narrow">
+    <p class="eyebrow">Support</p>
+    <h1 class="faq-title">Frequently Asked Questions</h1>
+    <p class="faq-subtitle">Everything you need to know about shopping with Youthes.</p>
+  </div>
+</div>
+
+<div class="container--narrow section">
+  @if (items$ | async; as items) {
+    @if (items.length) {
+      <div class="faq-list">
+        @for (item of items; track item.question; let index = $index) {
+          <div [class]="isOpen(index) ? 'faq-item faq-item--open' : 'faq-item'">
+            <button class="faq-item__question" (click)="toggle(index)">
+              <span>{{ item.question }}</span>
+              <span class="faq-item__icon">{{ isOpen(index) ? '-' : '+' }}</span>
+            </button>
+
+            <div class="faq-item__answer-wrap">
+              <p class="faq-item__answer">{{ item.answer }}</p>
+            </div>
+          </div>
+        }
+      </div>
+    } @else {
+      <p class="faq-empty">No FAQ items available yet. Check back soon.</p>
+    }
+  } @else {
+    <app-loading />
+  }
+
+  <div class="faq-contact">
+    <p class="faq-contact__title">Still have questions?</p>
+    <p class="faq-contact__sub">Reach out to us and we'll get back to you as soon as possible.</p>
+  </div>
+</div>
