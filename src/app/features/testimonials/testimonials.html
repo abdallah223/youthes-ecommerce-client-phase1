@@ -1,0 +1,128 @@
+<div class="testimonials-hero">
+  <div class="container--narrow">
+    <p class="eyebrow">Our Community</p>
+    <h1 class="testimonials-title">What our customers say</h1>
+    <p class="testimonials-subtitle">
+      Real reviews from real people who shop with Youthes.
+    </p>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+    @if (testimonials$ | async; as testimonials) {
+      @if (testimonials.length) {
+        <div class="testimonials-grid">
+          @for (t of testimonials; track t._id) {
+            <div class="testimonial-card">
+              <div class="testimonial-card__stars">
+                @for (star of starRange; track star) {
+                  <span [class]="star <= t.rating ? 'star star--filled' : 'star'">★</span>
+                }
+              </div>
+              <p class="testimonial-card__text">"{{ t.reviewText }}"</p>
+              <div class="testimonial-card__author">
+                <span class="testimonial-card__avatar">
+                  {{ t.userName.charAt(0).toUpperCase() }}
+                </span>
+                <span class="testimonial-card__name">{{ t.userName }}</span>
+              </div>
+            </div>
+          }
+        </div>
+      } @else {
+        <p class="testimonials-empty">
+          No reviews yet, be the first to share your experience!
+        </p>
+      }
+    } @else {
+      <app-loading />
+    }
+  </div>
+</section>
+
+<section class="submit-section">
+  <div class="container--narrow">
+    <div class="submit-card">
+      @if (!(isLoggedIn$ | async)) {
+        <div class="submit-gate">
+          <p class="submit-gate__icon">Write</p>
+          <h2 class="submit-gate__title">Share your experience</h2>
+          <p class="submit-gate__text">You need to be logged in to leave a review.</p>
+          <div class="submit-gate__actions">
+            <a routerLink="/login" class="btn btn--primary">Sign In</a>
+            <a routerLink="/register" class="btn btn--outline">Create Account</a>
+          </div>
+        </div>
+      } @else {
+        <h2 class="submit-title">Leave a Review</h2>
+        <p class="submit-subtitle">
+          Reviews are checked by our team before being published.
+          You can only submit one review per account.
+        </p>
+
+        @if (submitSuccess) {
+          <div class="alert alert--success submit-success">
+            <strong>Thank you!</strong> Your review has been submitted and is pending approval.
+          </div>
+        }
+
+        @if (submitError) {
+          <div class="alert alert--error" style="margin-bottom:20px">{{ submitError }}</div>
+        }
+
+        @if (!submitSuccess) {
+          <form [formGroup]="form" (ngSubmit)="submit()" novalidate class="submit-form">
+            <div class="form-group">
+              <label class="form-label">Your Rating</label>
+              <div class="star-picker" (mouseleave)="hoveredStar = 0">
+                @for (star of starRange; track star) {
+                  <button
+                    type="button"
+                    [class]="getStarClass(star)"
+                    (mouseenter)="hoveredStar = star"
+                    (click)="setRating(star)"
+                    [attr.aria-label]="star + ' stars'">
+                    ★
+                  </button>
+                }
+              </div>
+              @if (f.rating.invalid && f.rating.touched) {
+                <span class="form-error">Please select a rating</span>
+              }
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Your Review</label>
+              <textarea
+                formControlName="reviewText"
+                class="form-input submit-textarea"
+                [class.is-error]="f.reviewText.invalid && f.reviewText.touched"
+                placeholder="Tell us about your experience with Youthes..."
+                rows="4">
+              </textarea>
+              <div class="form-footer-row">
+                @if (f.reviewText.invalid && f.reviewText.touched) {
+                  <span class="form-error">Review must be between 20 and 500 characters</span>
+                }
+                <span
+                  class="char-count"
+                  [class.char-count--warn]="f.reviewText.value.length > 450">
+                  {{ f.reviewText.value.length }} / 500
+                </span>
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              class="btn btn--primary"
+              [class.btn--loading]="isSubmitting"
+              [disabled]="isSubmitting">
+              @if (!isSubmitting) { Submit Review }
+            </button>
+          </form>
+        }
+      }
+    </div>
+  </div>
+</section>
