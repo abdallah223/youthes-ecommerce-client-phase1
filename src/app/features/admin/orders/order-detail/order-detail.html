@@ -1,0 +1,130 @@
+<div>
+  <a routerLink="/admin/orders" class="admin-back-link">&larr; Back to Orders</a>
+
+  @if (order$ | async; as asyncOrder) {
+    @if (getDisplayOrder(asyncOrder); as order) {
+      <div class="admin-page-header">
+        <div>
+          <h1 class="admin-page-title">{{ order.orderNumber }}</h1>
+          <p class="admin-page-subtitle">{{ order.createdAt | date:'longDate' }}</p>
+        </div>
+        <span [class]="'badge ' + getStatusClass(order.status)">
+          {{ getStatusLabel(order.status) }}
+        </span>
+      </div>
+
+      @if (updateSuccess) {
+        <div class="alert alert--success" style="margin-bottom: 16px">{{ updateSuccess }}</div>
+      }
+      @if (updateError) {
+        <div class="alert alert--error" style="margin-bottom: 16px">{{ updateError }}</div>
+      }
+
+      @if (!isCancelled(order.status)) {
+        <div class="progress-tracker">
+          @for (step of progressSteps; track step; let last = $last; let index = $index) {
+            <div class="progress-step-wrap">
+              <div [class]="isStepComplete(step, order.status) ? 'progress-step progress-step--done' : 'progress-step'">
+                <div class="progress-step__dot">
+                  @if (isStepComplete(step, order.status)) {
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3.5">
+                      <polyline points="20 6 9 17 4 12" />
+                    </svg>
+                  }
+                </div>
+                <p class="progress-step__label">{{ step }}</p>
+              </div>
+              @if (!last) {
+                <div [class]="isStepComplete(progressSteps[index + 1], order.status) ? 'progress-connector progress-connector--done' : 'progress-connector'"></div>
+              }
+            </div>
+          }
+        </div>
+      } @else {
+        <div class="alert alert--error" style="margin-bottom: 20px">
+          <strong>{{ getStatusLabel(order.status) }}</strong>
+          @if (order.cancellationReason) {
+            <span> - {{ order.cancellationReason }}</span>
+          }
+        </div>
+      }
+
+      @if (getNextStatuses(order.status).length) {
+        @if (!showStatusForm) {
+          <button class="btn btn--primary btn--sm" (click)="openStatusForm(order.status)" style="margin-bottom: 20px">
+            Update Status
+          </button>
+        } @else {
+          <div class="status-form" [formGroup]="statusForm">
+            <div class="status-form__fields">
+              <div class="form-group">
+                <label class="form-label">New Status</label>
+                <select formControlName="status" class="form-select">
+                  @for (status of getNextStatuses(order.status); track status) {
+                    <option [value]="status">{{ getStatusLabel(status) }}</option>
+                  }
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Note <span class="form-hint">(Optional)</span></label>
+                <input type="text" formControlName="note" class="form-input" placeholder="Reason for cancellation, etc." />
+              </div>
+            </div>
+            <div class="status-form__actions">
+              <button class="btn btn--primary btn--sm" [class.btn--loading]="isUpdating" [disabled]="isUpdating" (click)="submitStatus()">
+                @if (!isUpdating) {
+                  <span>Confirm</span>
+                }
+              </button>
+              <button class="btn btn--ghost btn--sm" (click)="showStatusForm = false">Cancel</button>
+            </div>
+          </div>
+        }
+      }
+
+      <div class="order-detail-grid">
+        <section class="order-section">
+          <h2 class="order-section__title">Items Ordered</h2>
+          <div class="order-items">
+            @for (item of order.items; track item.productId) {
+              <div class="order-item">
+                <img [src]="productService.getImageUrl(item.productImage)" [alt]="item.productName" class="admin-thumb" />
+                <div class="order-item__info">
+                  <p class="order-item__name">{{ item.productName }}</p>
+                  <p class="order-item__meta">EGP {{ item.unitPrice | number:'1.0-0' }} x {{ item.quantity }}</p>
+                </div>
+                <p class="order-item__subtotal">EGP {{ item.subtotal | number:'1.0-0' }}</p>
+              </div>
+            }
+          </div>
+          <div class="order-totals">
+            <div class="order-total-row"><span>Subtotal</span><span>EGP {{ getItemsSubtotal(order) | number:'1.0-0' }}</span></div>
+            <div class="order-total-row"><span>Shipping</span><span>EGP {{ order.shippingFee | number:'1.0-0' }}</span></div>
+            <div class="order-total-row order-total-row--final"><span>Total</span><span>EGP {{ order.totalAmount | number:'1.0-0' }}</span></div>
+          </div>
+        </section>
+
+        <div>
+          <section class="order-section">
+            <h2 class="order-section__title">Customer</h2>
+            <div class="info-rows">
+              <div class="info-row"><span class="info-label">Name</span><span>{{ $any(order.user)?.fullName ?? '-' }}</span></div>
+              <div class="info-row"><span class="info-label">Email</span><span>{{ $any(order.user)?.email ?? '-' }}</span></div>
+              <div class="info-row"><span class="info-label">Phone</span><span>{{ $any(order.user)?.phone ?? '-' }}</span></div>
+            </div>
+          </section>
+          <section class="order-section">
+            <h2 class="order-section__title">Delivery</h2>
+            <div class="info-rows">
+              <div class="info-row"><span class="info-label">Phone</span><span>{{ order.deliveryPhone }}</span></div>
+              <div class="info-row"><span class="info-label">Address</span><span>{{ order.deliveryAddress }}</span></div>
+              <div class="info-row"><span class="info-label">Payment</span><span>Cash on Delivery</span></div>
+            </div>
+          </section>
+        </div>
+      </div>
+    }
+  } @else {
+    <app-loading />
+  }
+</div>

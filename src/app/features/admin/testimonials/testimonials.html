@@ -1,0 +1,83 @@
+<div>
+  <div class="admin-page-header">
+    <div>
+      <h1 class="admin-page-title">Testimonials</h1>
+      <p class="admin-page-subtitle">Moderate customer reviews</p>
+    </div>
+  </div>
+
+  <div class="admin-toolbar">
+    <select class="admin-filter-select" [formControl]="statusFilterControl" (change)="onFilterChange()">
+      @for (opt of statusFilterOptions; track opt.value) {
+        <option [value]="opt.value">{{ opt.label }}</option>
+      }
+    </select>
+  </div>
+
+  @if (isLoading) {
+    <app-loading />
+  } @else {
+    <div class="admin-table-wrap">
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>Customer</th>
+            <th>Review</th>
+            <th>Rating</th>
+            <th>Date</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (t of testimonials; track t._id) {
+            <tr>
+              <td class="cell-name">{{ t.userName }}</td>
+              <td class="cell-review">{{ t.reviewText }}</td>
+              <td class="cell-rating">
+                <span class="stars">
+                  @for (star of [1,2,3,4,5]; track star) {
+                    <span [class]="star <= t.rating ? 'star star--filled' : 'star'">★</span>
+                  }
+                </span>
+              </td>
+              <td>{{ t.createdAt | date:'mediumDate' }}</td>
+              <td>
+                <span [class]="'badge ' + getStatusClass(t.status)">{{ t.status }}</span>
+              </td>
+              <td>
+                <div class="table-actions">
+                  @for (action of actionOptions; track action.value) {
+                    @if (t.status !== action.value) {
+                      <button
+                        [class]="'table-btn ' + (action.value === 'approved' ? 'table-btn--success' : action.value === 'rejected' ? 'table-btn--delete' : 'table-btn--edit')"
+                        [disabled]="updatingId === t._id"
+                        (click)="onStatusUpdate(t, action.value)">
+                        {{ action.label }}
+                      </button>
+                    }
+                  }
+                </div>
+              </td>
+            </tr>
+          } @empty {
+            <tr><td colspan="6" class="admin-empty">No testimonials found.</td></tr>
+          }
+        </tbody>
+      </table>
+
+      @if (meta && meta.pages > 1) {
+        <div class="admin-pagination">
+          <span>Showing {{ testimonials.length }} of {{ meta.total }}</span>
+          <div class="admin-pagination__controls">
+            <button class="admin-pagination__btn" [disabled]="currentPage === 1" (click)="setPage(currentPage - 1)">←</button>
+            @for (page of getPages(); track page) {
+              <button [class]="'admin-pagination__btn' + (page === currentPage ? ' admin-pagination__btn--active' : '')" (click)="setPage(page)">{{ page }}</button>
+            }
+            <button class="admin-pagination__btn" [disabled]="!meta || currentPage === meta.pages" (click)="setPage(currentPage + 1)">→</button>
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>

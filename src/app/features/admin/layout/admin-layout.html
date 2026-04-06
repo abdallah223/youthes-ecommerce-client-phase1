@@ -1,0 +1,63 @@
+<div class="admin-shell">
+
+  <!-- Sidebar -->
+  <aside [class]="isSidebarOpen ? 'admin-sidebar admin-sidebar--open' : 'admin-sidebar'">
+    <div class="admin-sidebar__brand">
+      <span class="admin-sidebar__logo">Youthes</span>
+      <span class="admin-sidebar__label">Admin</span>
+    </div>
+
+    <nav class="admin-sidebar__nav">
+      @for (item of navItems; track item.path) {
+        <a
+          [routerLink]="item.path"
+          [class]="isActive(item.path) ? 'admin-nav-item admin-nav-item--active' : 'admin-nav-item'">
+          <span class="admin-nav-item__icon">{{ item.icon }}</span>
+          <span class="admin-nav-item__label">{{ item.label }}</span>
+          @if (item.path === '/admin/orders' && notifications.newOrders > 0) {
+            <span class="admin-nav-item__badge">{{ notifications.newOrders }}</span>
+          }
+        </a>
+      }
+    </nav>
+
+    <div class="admin-sidebar__footer">
+      <a routerLink="/" class="admin-sidebar__store-link">← Back to Store</a>
+      <button class="admin-sidebar__logout" (click)="logout()">Logout</button>
+    </div>
+  </aside>
+
+  <!-- Overlay (mobile) -->
+  @if (isSidebarOpen) {
+    <div class="admin-overlay" (click)="isSidebarOpen = false"></div>
+  }
+
+  <!-- Main area -->
+  <div class="admin-main">
+    <!-- Top bar -->
+    <header class="admin-topbar">
+      <button class="admin-topbar__hamburger" (click)="isSidebarOpen = !isSidebarOpen" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+
+      <div class="admin-topbar__alerts">
+        @if (notifications.outOfStock > 0) {
+          <a routerLink="/admin/products" class="admin-topbar__alert admin-topbar__alert--warn">
+            ⚠ {{ notifications.outOfStock }} out of stock
+          </a>
+        }
+      </div>
+
+      <div class="admin-topbar__user">
+        <span class="admin-topbar__avatar">{{ adminInitial }}</span>
+        <span class="admin-topbar__name">{{ adminName }}</span>
+      </div>
+    </header>
+
+    <!-- Page content -->
+    <main class="admin-content">
+      <router-outlet />
+    </main>
+  </div>
+
+</div>

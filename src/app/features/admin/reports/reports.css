@@ -1,0 +1,25 @@
+.report-filter {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.report-date-input { width: 160px; }
+.report-run-btn    { margin-bottom: 2px; }
+
+.report-table-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.report-table-title {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: var(--weight-regular);
+  color: var(--color-black);
+}
+
+.rank { font-weight: var(--weight-semibold); color: var(--color-muted); }
+.product-name { font-weight: var(--weight-medium); }

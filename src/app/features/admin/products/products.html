@@ -1,0 +1,146 @@
+<div>
+  <div class="admin-page-header">
+    <div>
+      <h1 class="admin-page-title">Products</h1>
+      <p class="admin-page-subtitle">
+        @if (meta) { {{ meta.total }} total products }
+      </p>
+    </div>
+    <a routerLink="/admin/products/new" class="btn btn--primary btn--sm"
+      >+ Add Product</a
+    >
+  </div>
+
+  <div class="admin-toolbar">
+    <div class="admin-search-wrap">
+      <svg
+        class="admin-search-icon"
+        width="14"
+        height="14"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <circle cx="11" cy="11" r="8" />
+        <line x1="21" y1="21" x2="16.65" y2="16.65" />
+      </svg>
+      <input
+        [formControl]="searchControl"
+        type="search"
+        class="admin-search-input"
+        placeholder="Search products…"
+      />
+    </div>
+    <select class="admin-filter-select" (change)="onCategoryChange($event)">
+      <option value="">All Categories</option>
+      @for (cat of categories; track cat._id) {
+      <option [value]="cat._id">{{ cat.name }}</option>
+      }
+    </select>
+  </div>
+
+  @if (isLoading) {
+  <app-loading />
+  } @else {
+  <div class="admin-table-wrap">
+    <table class="admin-table">
+      <thead>
+        <tr>
+          <th>Image</th>
+          <th>Name</th>
+          <th>Category</th>
+          <th>Price</th>
+          <th>Stock</th>
+          <th>Status</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (product of products; track product._id) {
+        <tr>
+          <td>
+            <img
+              [src]="getImageUrl(product.image)"
+              [alt]="product.name"
+              class="admin-thumb"
+              (error)="onImageError($event)"
+            />
+          </td>
+          <td class="product-name">{{ product.name }}</td>
+          <td>{{ product.category.name }}</td>
+          <td>EGP {{ product.price | number:'1.0-0' }}</td>
+          <td>
+            <span
+              [class]="product.stockCount <= lowStockThreshold && product.stockCount > 0 ? 'stock-warn' : ''"
+            >
+              {{ product.stockCount }}
+            </span>
+          </td>
+          <td>
+            @if (product.isDeleted) {
+            <span class="badge badge--neutral">Deleted</span>
+            } @else if (product.stockCount === 0) {
+            <span class="badge badge--error">Out of Stock</span>
+            } @else {
+            <span class="badge badge--success">Active</span>
+            }
+          </td>
+          <td>
+            <div class="table-actions">
+              <button
+                class="table-btn table-btn--edit"
+                (click)="onEdit(product)"
+              >
+                Edit
+              </button>
+              <button
+                class="table-btn table-btn--delete"
+                [disabled]="deletingId === product._id"
+                (click)="onDelete(product)"
+              >
+                {{ deletingId === product._id ? '…' : 'Delete' }}
+              </button>
+            </div>
+          </td>
+        </tr>
+        } @empty {
+        <tr>
+          <td colspan="7" class="admin-empty">No products found.</td>
+        </tr>
+        }
+      </tbody>
+    </table>
+
+    @if (meta && meta.pages > 1) {
+    <div class="admin-pagination">
+      <span>Showing {{ products.length }} of {{ meta.total }}</span>
+      <div class="admin-pagination__controls">
+        <button
+          class="admin-pagination__btn"
+          [disabled]="currentPage === 1"
+          (click)="setPage(currentPage - 1)"
+        >
+          ←
+        </button>
+        @for (page of getPages(); track page) {
+        <button
+          [class]="'admin-pagination__btn' + (page === currentPage ? ' admin-pagination__btn--active' : '')"
+          (click)="setPage(page)"
+        >
+          {{ page }}
+        </button>
+        }
+        <button
+          class="admin-pagination__btn"
+          [disabled]="!meta || currentPage === meta.pages"
+          (click)="setPage(currentPage + 1)"
+        >
+          →
+        </button>
+      </div>
+    </div>
+    }
+  </div>
+  }
+</div>

@@ -1,0 +1,2 @@
+.product-name { font-weight: var(--weight-medium); max-width: 200px; }
+.stock-warn   { color: var(--color-warning); font-weight: var(--weight-semibold); }

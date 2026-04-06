@@ -1,0 +1,6 @@
+.cell-mono {
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-wide);
+  color: var(--color-secondary);
+}

@@ -1,0 +1,83 @@
+<div>
+  <div class="admin-page-header">
+    <div>
+      <h1 class="admin-page-title">Users</h1>
+      <p class="admin-page-subtitle">@if (meta) { {{ meta.total }} registered users }</p>
+    </div>
+  </div>
+
+  <div class="admin-toolbar">
+    <div class="admin-search-wrap">
+      <svg class="admin-search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <input [formControl]="searchControl" type="search" class="admin-search-input" placeholder="Search by name, email or phone…">
+    </div>
+    <select class="admin-filter-select" [formControl]="isActiveControl" (change)="onFilterChange()">
+      <option value="">All Users</option>
+      <option value="true">Active</option>
+      <option value="false">Deactivated</option>
+    </select>
+  </div>
+
+  @if (isLoading) {
+    <app-loading />
+  } @else {
+    <div class="admin-table-wrap">
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Gender</th>
+            <th>Joined</th>
+            <th>Status</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (user of users; track user._id) {
+            <tr>
+              <td class="user-name">{{ user.fullName }}</td>
+              <td>{{ user.email }}</td>
+              <td>{{ user.phone }}</td>
+              <td>{{ user.gender }}</td>
+              <td>{{ user.createdAt | date:'mediumDate' }}</td>
+              <td>
+                @if (user.isActive) {
+                  <span class="badge badge--success">Active</span>
+                } @else {
+                  <span class="badge badge--neutral">Inactive</span>
+                }
+              </td>
+              <td>
+                <button
+                  [class]="user.isActive ? 'table-btn table-btn--delete' : 'table-btn table-btn--success'"
+                  [disabled]="togglingId === user._id"
+                  (click)="onToggle(user)">
+                  {{ user.isActive ? 'Deactivate' : 'Activate' }}
+                </button>
+              </td>
+            </tr>
+          } @empty {
+            <tr><td colspan="7" class="admin-empty">No users found.</td></tr>
+          }
+        </tbody>
+      </table>
+
+      @if (meta && meta.pages > 1) {
+        <div class="admin-pagination">
+          <span>Showing {{ users.length }} of {{ meta.total }}</span>
+          <div class="admin-pagination__controls">
+            <button class="admin-pagination__btn" [disabled]="currentPage === 1" (click)="setPage(currentPage - 1)">←</button>
+            @for (page of getPages(); track page) {
+              <button [class]="'admin-pagination__btn' + (page === currentPage ? ' admin-pagination__btn--active' : '')" (click)="setPage(page)">{{ page }}</button>
+            }
+            <button class="admin-pagination__btn" [disabled]="!meta || currentPage === meta.pages" (click)="setPage(currentPage + 1)">→</button>
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>

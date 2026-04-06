@@ -1,0 +1,81 @@
+<div>
+  <div class="admin-page-header">
+    <h1 class="admin-page-title">Sales Report</h1>
+  </div>
+
+  <!-- Date filter -->
+  <div class="report-filter" [formGroup]="form">
+    <div class="form-group">
+      <label class="form-label">From</label>
+      <input type="date" formControlName="dateFrom" class="form-input report-date-input">
+    </div>
+    <div class="form-group">
+      <label class="form-label">To</label>
+      <input type="date" formControlName="dateTo"   class="form-input report-date-input">
+    </div>
+    <button class="btn btn--primary btn--sm report-run-btn"
+      [class.btn--loading]="isLoading" [disabled]="isLoading"
+      (click)="loadReport()">
+      <span>Run Report</span>
+    </button>
+  </div>
+
+  @if (errorMessage) {
+    <div class="alert alert--error" style="margin-bottom:16px">{{ errorMessage }}</div>
+  }
+
+  @if (isLoading) {
+    <app-loading />
+  }
+
+  @if (!isLoading && report) {
+
+    <!-- Summary stats -->
+    <div class="admin-stats-grid">
+      <div class="stat-card">
+        <p class="stat-card__label">Total Revenue</p>
+        <p class="stat-card__value">EGP {{ report.summary.totalRevenue | number:'1.0-0' }}</p>
+        <p class="stat-card__sub">From delivered orders</p>
+      </div>
+      <div class="stat-card">
+        <p class="stat-card__label">Orders Delivered</p>
+        <p class="stat-card__value">{{ report.summary.totalOrders }}</p>
+      </div>
+      <div class="stat-card">
+        <p class="stat-card__label">Average Order Value</p>
+        <p class="stat-card__value">EGP {{ report.summary.averageOrderValue | number:'1.0-0' }}</p>
+      </div>
+    </div>
+
+    <!-- Top products -->
+    <div class="admin-table-wrap">
+      <div class="report-table-header">
+        <h2 class="report-table-title">Top Products by Units Sold</h2>
+      </div>
+      @if (report.topProducts.length) {
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Product</th>
+              <th>Units Sold</th>
+              <th>Revenue</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (product of report.topProducts; track product._id; let i = $index) {
+              <tr>
+                <td class="rank">{{ i + 1 }}</td>
+                <td class="product-name">{{ product.productName }}</td>
+                <td>{{ product.totalSold }}</td>
+                <td>EGP {{ product.totalRevenue | number:'1.0-0' }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      } @else {
+        <div class="admin-empty">No sales data in selected period.</div>
+      }
+    </div>
+  }
+</div>

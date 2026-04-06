@@ -1,0 +1,203 @@
+<div>
+  <div class="admin-page-header">
+    <h1 class="admin-page-title">Static Pages</h1>
+  </div>
+
+  <section class="page-section page-section--contact">
+    <h2 class="page-section__title">Contact Us</h2>
+
+    @if (isLoadingContact) {
+    <app-loading />
+    } @else { @if (contactSuccess) {
+    <div class="alert alert--success" style="margin-bottom: 12px">
+      Saved successfully.
+    </div>
+    } @if (contactError) {
+    <div class="alert alert--error" style="margin-bottom: 12px">
+      {{ contactError }}
+    </div>
+    }
+
+    <form [formGroup]="contactForm" (ngSubmit)="saveContact()" novalidate>
+      <div class="contact-fields-grid">
+        <div class="form-group">
+          <label class="form-label">Phone</label>
+          <input
+            type="text"
+            formControlName="phone"
+            class="form-input"
+            placeholder="01XXXXXXXXX"
+          />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <input
+            type="email"
+            formControlName="email"
+            class="form-input"
+            placeholder="hello@youthes.com"
+          />
+          @if (contactForm.get('email')!.invalid &&
+          contactForm.get('email')!.touched) {
+          <span class="form-error">Valid email required</span>
+          }
+        </div>
+        <div class="form-group">
+          <label class="form-label">Working Hours</label>
+          <input
+            type="text"
+            formControlName="workingHours"
+            class="form-input"
+            placeholder="Saturday – Thursday, 9:00 AM – 10:00 PM"
+          />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Address</label>
+          <textarea
+            formControlName="address"
+            class="form-input contact-textarea"
+            rows="2"
+            placeholder="Street, area, city"
+          ></textarea>
+        </div>
+      </div>
+      <button
+        type="submit"
+        class="btn btn--primary btn--sm"
+        style="margin-top: 16px"
+        [class.btn--loading]="isSavingContact"
+        [disabled]="isSavingContact"
+      >
+        @if (!isSavingContact) { Save Contact Us }
+      </button>
+    </form>
+    }
+  </section>
+  <div class="pages-grid">
+    <!-- About Us -->
+    <section class="page-section">
+      <h2 class="page-section__title">About Us</h2>
+
+      @if (isLoadingAbout) {
+      <app-loading />
+      } @else { @if (aboutSuccess) {
+      <div class="alert alert--success" style="margin-bottom: 12px">
+        Saved successfully.
+      </div>
+      } @if (aboutError) {
+      <div class="alert alert--error" style="margin-bottom: 12px">
+        {{ aboutError }}
+      </div>
+      }
+
+      <form [formGroup]="aboutForm" (ngSubmit)="saveAbout()" novalidate>
+        <div class="form-group">
+          <label class="form-label">Title</label>
+          <input
+            type="text"
+            formControlName="title"
+            class="form-input"
+            [class.is-error]="aboutForm.get('title')!.invalid && aboutForm.get('title')!.touched"
+          />
+        </div>
+        <div class="form-group" style="margin-top: 12px">
+          <label class="form-label">Body</label>
+          <textarea
+            formControlName="body"
+            class="form-input page-textarea"
+            [class.is-error]="aboutForm.get('body')!.invalid && aboutForm.get('body')!.touched"
+            rows="6"
+          ></textarea>
+        </div>
+        <button
+          type="submit"
+          class="btn btn--primary btn--sm"
+          style="margin-top: 12px"
+          [class.btn--loading]="isSavingAbout"
+          [disabled]="isSavingAbout"
+        >
+          <span>Save About Us</span>
+        </button>
+      </form>
+      }
+    </section>
+
+    <!-- FAQ -->
+    <section class="page-section">
+      <div class="page-section__header">
+        <h2 class="page-section__title">FAQ</h2>
+        <button class="btn btn--outline btn--sm" (click)="addFaqItem()">
+          + Add Item
+        </button>
+      </div>
+
+      @if (isLoadingFaq) {
+      <app-loading />
+      } @else { @if (faqSuccess) {
+      <div class="alert alert--success" style="margin-bottom: 12px">
+        Saved successfully.
+      </div>
+      } @if (faqError) {
+      <div class="alert alert--error" style="margin-bottom: 12px">
+        {{ faqError }}
+      </div>
+      }
+
+      <form [formGroup]="faqForm" (ngSubmit)="saveFaq()" novalidate>
+        <div class="faq-items" formArrayName="items">
+          @for (item of faqItems.controls; track $index) {
+          <div class="faq-item" [formGroupName]="$index">
+            <div class="faq-item__fields">
+              <div class="form-group">
+                <label class="form-label">Question</label>
+                <input
+                  type="text"
+                  formControlName="question"
+                  class="form-input"
+                  placeholder="Question"
+                />
+              </div>
+              <div class="form-group" style="margin-top: 8px">
+                <label class="form-label">Answer</label>
+                <textarea
+                  formControlName="answer"
+                  class="form-input"
+                  rows="2"
+                  placeholder="Answer"
+                ></textarea>
+              </div>
+            </div>
+            <button
+              type="button"
+              class="faq-item__remove"
+              (click)="removeFaqItem($index)"
+              title="Remove"
+            >
+              ✕
+            </button>
+          </div>
+          } @if (!faqItems.length) {
+          <p class="admin-empty">
+            No FAQ items yet. Click "+ Add Item" to start.
+          </p>
+          }
+        </div>
+
+        @if (faqItems.length) {
+        <button
+          type="submit"
+          class="btn btn--primary btn--sm"
+          style="margin-top: 12px"
+          [class.btn--loading]="isSavingFaq"
+          [disabled]="isSavingFaq"
+        >
+          <span>Save FAQ</span>
+        </button>
+        }
+      </form>
+      }
+    </section>
+  </div>
+
+  <!-- Contact Us — full width below -->
+</div>

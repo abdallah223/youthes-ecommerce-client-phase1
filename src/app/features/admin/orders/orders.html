@@ -1,0 +1,83 @@
+<div>
+  <div class="admin-page-header">
+    <div>
+      <h1 class="admin-page-title">Orders</h1>
+      <p class="admin-page-subtitle">
+        @if (meta) { {{ meta.total }} total orders }
+      </p>
+    </div>
+  </div>
+
+  <!-- Toolbar -->
+  <div class="admin-toolbar">
+    <div class="admin-search-wrap">
+      <svg class="admin-search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <input [formControl]="searchControl" type="search" class="admin-search-input" placeholder="Search order number…">
+    </div>
+    <select class="admin-filter-select" (change)="onStatusChange($event)" [value]="currentStatus">
+      @for (opt of statusOptions; track opt.value) {
+        <option [value]="opt.value">{{ opt.label }}</option>
+      }
+    </select>
+  </div>
+
+  @if (isLoading) {
+    <app-loading />
+  } @else {
+    <div class="admin-table-wrap">
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>Order #</th>
+            <th>Date</th>
+            <th>Customer</th>
+            <th>Phone</th>
+            <th>Items</th>
+            <th>Total</th>
+            <th>Status</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (order of orders; track order._id) {
+            <tr>
+              <td class="cell-mono">{{ order.orderNumber }}</td>
+              <td>{{ order.createdAt | date:'mediumDate' }}</td>
+              <td>{{ $any(order.user)?.fullName ?? '—' }}</td>
+              <td>{{ order.deliveryPhone }}</td>
+              <td>{{ order.items.length }}</td>
+              <td>EGP {{ order.totalAmount | number:'1.0-0' }}</td>
+              <td>
+                <span [class]="'badge ' + getStatusClass(order.status)">
+                  {{ getStatusLabel(order.status) }}
+                </span>
+              </td>
+              <td>
+                <a [routerLink]="['/admin/orders', order._id]" class="table-btn table-btn--view">View</a>
+              </td>
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="8" class="admin-empty">No orders found.</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+
+      @if (meta && meta.pages > 1) {
+        <div class="admin-pagination">
+          <span>Showing {{ orders.length }} of {{ meta.total }}</span>
+          <div class="admin-pagination__controls">
+            <button class="admin-pagination__btn" [disabled]="currentPage === 1" (click)="setPage(currentPage - 1)">←</button>
+            @for (page of getPages(); track page) {
+              <button [class]="'admin-pagination__btn' + (page === currentPage ? ' admin-pagination__btn--active' : '')" (click)="setPage(page)">{{ page }}</button>
+            }
+            <button class="admin-pagination__btn" [disabled]="currentPage === meta.pages" (click)="setPage(currentPage + 1)">→</button>
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>
