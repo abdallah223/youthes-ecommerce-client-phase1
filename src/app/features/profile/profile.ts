@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { LucideAngularModule } from 'lucide-angular';
 import { firstValueFrom } from 'rxjs';
 import { AuthService } from '../../core/services/auth.service';
 import { SUCCESS_FLASH_MS } from '../../core/constants/app.constants';
@@ -15,7 +16,7 @@ const MIN_PASSWORD_LENGTH = 8;
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule, LucideAngularModule],
   templateUrl: './profile.html',
   styleUrl: './profile.css',
 })

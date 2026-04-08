@@ -4,6 +4,7 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { LucideAngularModule } from 'lucide-angular';
 import { catchError, EMPTY, exhaustMap, finalize, map, Subject, switchMap, tap, timer } from 'rxjs';
 import { SUCCESS_FLASH_MS } from '../../core/constants/app.constants';
 import { AuthService } from '../../core/services/auth.service';
@@ -17,7 +18,7 @@ const MAX_RATING = 5;
 @Component({
   selector: 'app-testimonials',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterModule, Loading],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule, Loading, LucideAngularModule],
   templateUrl: './testimonials.html',
   styleUrl: './testimonials.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

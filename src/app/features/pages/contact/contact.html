@@ -1,56 +1,182 @@
 <div class="contact-hero">
-  <div class="container--narrow">
-    <p class="eyebrow">Get in Touch</p>
-    <h1 class="contact-title">Contact Us</h1>
-    <p class="contact-subtitle">We would love to hear from you.</p>
+  <div class="container contact-hero__inner">
+    <div class="contact-hero__copy">
+      <p class="eyebrow">Get in Touch</p>
+      <h1 class="contact-title">Let&apos;s help you shop with confidence</h1>
+      <p class="contact-subtitle">
+        Whether you need help with sizing, delivery details, product
+        availability, or order support, the Youthes team is here to help.
+      </p>
+    </div>
+
+    <div class="contact-hero__highlights">
+      <div class="contact-highlight">
+        <div class="contact-highlight__icon">
+          <lucide-angular name="shield-check" [size]="18"></lucide-angular>
+        </div>
+        <div>
+          <span class="contact-highlight__label">Support</span>
+          <span class="contact-highlight__value">Fast replies during working hours</span>
+        </div>
+      </div>
+      <div class="contact-highlight">
+        <div class="contact-highlight__icon">
+          <lucide-angular name="map-pinned" [size]="18"></lucide-angular>
+        </div>
+        <div>
+          <span class="contact-highlight__label">Coverage</span>
+          <span class="contact-highlight__value">Orders and delivery across Egypt</span>
+        </div>
+      </div>
+      <div class="contact-highlight">
+        <div class="contact-highlight__icon">
+          <lucide-angular name="circle-help" [size]="18"></lucide-angular>
+        </div>
+        <div>
+          <span class="contact-highlight__label">Topics</span>
+          <span class="contact-highlight__value">Orders, sizing, stock, collaborations</span>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
-<div class="container--narrow section">
+<div class="container section">
   @if (content$ | async; as content) {
-  <div class="contact-grid">
-    <div class="contact-card">
-      <span class="contact-card__icon">📞</span>
-      <h3 class="contact-card__title">Phone</h3>
-      <p class="contact-card__value">{{ content.phone }}</p>
-    </div>
+    <div class="contact-layout">
+      <section class="contact-main">
+        <div class="contact-grid">
+          <article class="contact-card">
+            <div class="contact-card__icon">
+              <lucide-angular name="phone" [size]="18"></lucide-angular>
+            </div>
+            <p class="contact-card__eyebrow">Direct line</p>
+            <h3 class="contact-card__title">Phone</h3>
+            <p class="contact-card__value">{{ content.phone }}</p>
+            <p class="contact-card__detail">
+              Best for urgent order updates, delivery coordination, and fast
+              support.
+            </p>
+          </article>
 
-    <div class="contact-card">
-      <span class="contact-card__icon">✉️</span>
-      <h3 class="contact-card__title">Email</h3>
-      <p class="contact-card__value">{{ content.email }}</p>
-    </div>
+          <article class="contact-card">
+            <div class="contact-card__icon">
+              <lucide-angular name="mail" [size]="18"></lucide-angular>
+            </div>
+            <p class="contact-card__eyebrow">Inbox</p>
+            <h3 class="contact-card__title">Email</h3>
+            <p class="contact-card__value">{{ content.email }}</p>
+            <p class="contact-card__detail">
+              Best for detailed questions, partnership requests, and support
+              follow-up.
+            </p>
+          </article>
 
-    <div class="contact-card">
-      <span class="contact-card__icon">📍</span>
-      <h3 class="contact-card__title">Address</h3>
-      <p class="contact-card__value">{{ content.address }}</p>
-    </div>
+          <article class="contact-card">
+            <div class="contact-card__icon">
+              <lucide-angular name="map-pinned" [size]="18"></lucide-angular>
+            </div>
+            <p class="contact-card__eyebrow">Base</p>
+            <h3 class="contact-card__title">Address</h3>
+            <p class="contact-card__value">{{ content.address }}</p>
+            <p class="contact-card__detail">
+              Use this for business correspondence and verified location
+              details.
+            </p>
+          </article>
 
-    <div class="contact-card">
-      <span class="contact-card__icon">🕐</span>
-      <h3 class="contact-card__title">Working Hours</h3>
-      <p class="contact-card__value">{{ content.workingHours }}</p>
-    </div>
-  </div>
+          <article class="contact-card">
+            <div class="contact-card__icon">
+              <lucide-angular name="clock3" [size]="18"></lucide-angular>
+            </div>
+            <p class="contact-card__eyebrow">Availability</p>
+            <h3 class="contact-card__title">Working Hours</h3>
+            <p class="contact-card__value">{{ content.workingHours }}</p>
+            <p class="contact-card__detail">
+              Messages sent outside active hours are picked up on the next
+              working window.
+            </p>
+          </article>
+        </div>
 
-  @if (content.socialLinks.length) {
-  <div class="social-section">
-    <h2 class="social-title">Follow Us</h2>
-    <div class="social-links">
-      @for (link of content.socialLinks; track link.label) {
-      <a
-        [href]="link.url"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="social-link"
-      >
-        {{ link.label }}
-      </a>
-      }
+        @if (content.socialLinks.length) {
+          <section class="social-section">
+            <div class="social-section__header">
+              <p class="eyebrow">Stay Connected</p>
+              <h2 class="social-title">Follow new arrivals and store updates</h2>
+              <p class="social-copy">
+                Stay close to new collections, best sellers, and practical
+                updates from a local Egyptian brand.
+              </p>
+            </div>
+
+            <div class="social-links">
+              @for (link of content.socialLinks; track link.label) {
+                <a
+                  [href]="link.url"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="social-link"
+                >
+                  <div class="social-link__main">
+                    <span class="social-link__icon">
+                      <lucide-angular name="arrow-up-right" [size]="16"></lucide-angular>
+                    </span>
+                    <span class="social-link__label">{{ link.label }}</span>
+                  </div>
+                  <span class="social-link__hint">Open channel</span>
+                </a>
+              }
+            </div>
+          </section>
+        }
+      </section>
+
+      <aside class="contact-sidebar">
+        <div class="contact-panel">
+          <p class="contact-panel__eyebrow">How We Help</p>
+          <h2 class="contact-panel__title">What you can contact us about</h2>
+          <ul class="contact-panel__list">
+            <li>
+              <lucide-angular name="package2" [size]="16"></lucide-angular>
+              <span>Order tracking and delivery updates</span>
+            </li>
+            <li>
+              <lucide-angular name="sparkles" [size]="16"></lucide-angular>
+              <span>Product sizing and stock availability</span>
+            </li>
+            <li>
+              <lucide-angular name="shield-check" [size]="16"></lucide-angular>
+              <span>Returns, exchange guidance, and order issues</span>
+            </li>
+            <li>
+              <lucide-angular name="shopping-bag" [size]="16"></lucide-angular>
+              <span>Questions about clothing, shoes, accessories, and care items</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="contact-panel contact-panel--accent">
+          <p class="contact-panel__eyebrow">Response Flow</p>
+          <h2 class="contact-panel__title">The fastest way to reach us</h2>
+          <p class="contact-panel__body">
+            For urgent support, start with phone. For detailed requests or
+            anything that needs records and follow-up, email works best.
+          </p>
+          <div class="contact-panel__channels">
+            <div class="contact-channel">
+              <lucide-angular name="phone" [size]="16"></lucide-angular>
+              <span>Urgent help</span>
+            </div>
+            <div class="contact-channel">
+              <lucide-angular name="mail" [size]="16"></lucide-angular>
+              <span>Detailed follow-up</span>
+            </div>
+          </div>
+        </div>
+      </aside>
     </div>
-  </div>
-  } } @else {
-  <app-loading />
+  } @else {
+    <app-loading />
   }
 </div>

@@ -8,6 +8,7 @@ import { AdminProductService } from "../../../../core/services/admin-product.ser
 import { AdminCategoryService } from "../../../../core/services/admin-category.service";
 import { Category, Product } from "../../../../core/models";
 import { Loading } from "../../../../shared/components/loading/loading";
+import { LucideAngularModule } from "lucide-angular";
 
 const MAX_IMAGE_SIZE_MB = 2;
 const MAX_IMAGE_SIZE_BYTES = MAX_IMAGE_SIZE_MB * 1024 * 1024;
@@ -21,7 +22,7 @@ const ALLOWED_IMAGE_TYPES = [
 @Component({
   selector: "app-product-form",
   standalone: true,
-  imports: [CommonModule, RouterModule, ReactiveFormsModule, Loading],
+  imports: [CommonModule, RouterModule, ReactiveFormsModule, Loading, LucideAngularModule],
   templateUrl: "./product-form.html",
   styleUrl: "./product-form.css",
 })

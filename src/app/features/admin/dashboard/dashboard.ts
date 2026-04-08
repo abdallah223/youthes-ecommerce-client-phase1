@@ -1,22 +1,24 @@
-import { Component, inject, OnInit, OnDestroy } from "@angular/core";
-import { CommonModule } from "@angular/common";
-import { RouterModule } from "@angular/router";
-import { Subscription, forkJoin } from "rxjs";
-import { AdminOrderService } from "../../../core/services/admin-order.service";
-import {
-  NotificationCounts,
-  Order,
-  PaginationMeta,
-} from "../../../core/models";
-import { Loading } from "../../../shared/components/loading/loading";
-import { DEFAULT_PAGE } from "../../../core/constants/app.constants";
+import { CommonModule } from '@angular/common';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { LucideAngularModule } from 'lucide-angular';
+import { Subscription, forkJoin } from 'rxjs';
+import { DEFAULT_PAGE } from '../../../core/constants/app.constants';
+import { NotificationCounts, Order } from '../../../core/models';
+import { AdminOrderService } from '../../../core/services/admin-order.service';
+import { Loading } from '../../../shared/components/loading/loading';
 
 @Component({
-  selector: "app-dashboard",
+  selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, RouterModule, Loading],
-  templateUrl: "./dashboard.html",
-  styleUrl: "./dashboard.css",
+  imports: [
+    CommonModule,
+    RouterModule,
+    Loading,
+    LucideAngularModule,
+  ],
+  templateUrl: './dashboard.html',
+  styleUrl: './dashboard.css',
 })
 export class Dashboard implements OnInit, OnDestroy {
   private readonly orderService = inject(AdminOrderService);
@@ -48,6 +50,7 @@ export class Dashboard implements OnInit, OnDestroy {
   getStatusLabel(status: string): string {
     return this.orderService.getStatusLabel(status);
   }
+
   getStatusClass(status: string): string {
     return this.orderService.getStatusClass(status);
   }

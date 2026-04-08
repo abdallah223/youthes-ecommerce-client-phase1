@@ -1,21 +1,49 @@
 <section class="hero">
   <div class="hero__content">
-    <p class="hero__eyebrow">New Collection</p>
-    <h1 class="hero__title">Dress for<br /><em>your generation</em></h1>
+    <p class="hero__eyebrow">Youthes Local Edit</p>
+    <h1 class="hero__title">
+      Everyday fashion and care
+      <span>for life in Egypt</span>
+    </h1>
     <p class="hero__body">
-      Contemporary fashion curated for the modern youth. Minimal design, maximum
-      expression.
+      Discover women's clothing, men's clothing, shoes, accessories, and
+      personal care from a local brand focused on practical style and easy wear.
     </p>
+
     <div class="hero__actions">
-      <a routerLink="/products" class="btn btn--primary btn--lg">Shop Now</a>
+      <a routerLink="/products" class="btn btn--primary btn--lg">
+        Shop the Collection
+        <lucide-angular name="arrow-right" [size]="18"></lucide-angular>
+      </a>
       <a routerLink="/about" class="btn btn--outline btn--lg">Our Story</a>
     </div>
+
+    <div class="hero__notes">
+      <div class="hero__note">
+        <span class="hero__note-value">02-05</span>
+        <span class="hero__note-label">Working days delivery across Egypt</span>
+      </div>
+      <div class="hero__note">
+        <span class="hero__note-value">COD</span>
+        <span class="hero__note-label">Simple local checkout</span>
+      </div>
+    </div>
   </div>
+
   <div class="hero__visual">
     <div class="hero__image-wrap">
+      <div class="hero__frame hero__frame--top"></div>
       <img src="assets/hero.png" alt="Youthes Collection" class="hero__image" />
-      <div class="hero__pill hero__pill--1">Free Shipping</div>
-      <div class="hero__pill hero__pill--2">Cash on Delivery</div>
+      <div class="hero__frame hero__frame--bottom"></div>
+
+      <div class="hero__pill hero__pill--1">
+        <span class="hero__pill-kicker">Edit 01</span>
+        Clothing, shoes, and daily essentials
+      </div>
+      <div class="hero__pill hero__pill--2">
+        <span class="hero__pill-kicker">Local</span>
+        Picks made for everyday Egyptian style
+      </div>
     </div>
   </div>
 </section>
@@ -24,31 +52,39 @@
   <div class="container">
     <div class="features-strip__grid">
       <div class="feature-item">
-        <span class="feature-item__icon">Delivery</span>
+        <div class="feature-item__icon">
+          <lucide-angular name="map-pinned" [size]="18"></lucide-angular>
+        </div>
         <div>
-          <p class="feature-item__title">Egypt-wide Delivery</p>
-          <p class="feature-item__text">2-5 business days</p>
+          <p class="feature-item__title">Egypt-wide delivery</p>
+          <p class="feature-item__text">Reliable delivery to your doorstep</p>
         </div>
       </div>
       <div class="feature-item">
-        <span class="feature-item__icon">COD</span>
+        <div class="feature-item__icon">
+          <lucide-angular name="truck" [size]="18"></lucide-angular>
+        </div>
         <div>
-          <p class="feature-item__title">Cash on Delivery</p>
-          <p class="feature-item__text">Pay when you receive</p>
+          <p class="feature-item__title">2-5 working days</p>
+          <p class="feature-item__text">Predictable delivery windows</p>
         </div>
       </div>
       <div class="feature-item">
-        <span class="feature-item__icon">New</span>
+        <div class="feature-item__icon">
+          <lucide-angular name="shield-check" [size]="18"></lucide-angular>
+        </div>
         <div>
-          <p class="feature-item__title">Curated Selection</p>
-          <p class="feature-item__text">Quality over quantity</p>
+          <p class="feature-item__title">Secure shopping</p>
+          <p class="feature-item__text">Protected cart and checkout flow</p>
         </div>
       </div>
       <div class="feature-item">
-        <span class="feature-item__icon">Safe</span>
+        <div class="feature-item__icon">
+          <lucide-angular name="sparkles" [size]="18"></lucide-angular>
+        </div>
         <div>
-          <p class="feature-item__title">Secure Shopping</p>
-          <p class="feature-item__text">Your data is safe</p>
+          <p class="feature-item__title">Full lifestyle mix</p>
+          <p class="feature-item__text">Clothing, shoes, accessories, and care</p>
         </div>
       </div>
     </div>
@@ -59,20 +95,25 @@
   <div class="container">
     <div class="section-header">
       <div>
-        <p class="section-eyebrow">Just In</p>
-        <h2 class="section-title">New Arrivals</h2>
+        <p class="section-eyebrow">Fresh Picks</p>
+        <h2 class="section-title">Latest Arrivals</h2>
       </div>
-      <a routerLink="/products" class="btn btn--outline btn--sm">View All</a>
+      <a routerLink="/products" class="btn btn--outline btn--sm">
+        Explore All
+      </a>
     </div>
 
     @if (featuredProducts$ | async; as products) {
-    <div class="products-grid">
-      @for (product of products; track product._id) {
-      <app-product-card [product]="product" (addToCart)="onAddToCart($event)" />
-      }
-    </div>
+      <div class="products-grid">
+        @for (product of products; track product._id) {
+          <app-product-card
+            [product]="product"
+            (addToCart)="onAddToCart($event)"
+          />
+        }
+      </div>
     } @else {
-    <app-loading />
+      <app-loading />
     }
   </div>
 </section>
@@ -81,43 +122,58 @@
   <div class="container">
     <div class="banner">
       <div class="banner__text">
-        <h2 class="banner__title">Your style, your story</h2>
+        <p class="section-eyebrow">Made for Daily Life</p>
+        <h2 class="banner__title">Style, comfort, and essentials in one place</h2>
         <p class="banner__body">
-          Discover pieces that speak to who you are. New styles added every
-          week.
+          From outfits to finishing details and personal care, Youthes brings
+          together the categories you actually shop together.
         </p>
-        <a routerLink="/products" class="btn btn--primary"
-          >Explore Collection</a
-        >
+        <a routerLink="/products" class="btn btn--accent">
+          Explore Collection
+          <lucide-angular name="arrow-right" [size]="18"></lucide-angular>
+        </a>
+      </div>
+      <div class="banner__stats">
+        <div class="banner__stat">
+          <span class="banner__stat-value">08</span>
+          <span class="banner__stat-label">Core shopping categories</span>
+        </div>
+        <div class="banner__stat">
+          <span class="banner__stat-value">24/7</span>
+          <span class="banner__stat-label">Available storefront</span>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-@if (testimonials$ | async; as testimonials) { @if (testimonials.length) {
-<section class="section">
-  <div class="container">
-    <div class="section-header section-header--centered">
-      <p class="section-eyebrow">Reviews</p>
-      <h2 class="section-title">What our customers say</h2>
-    </div>
+@if (testimonials$ | async; as testimonials) {
+  @if (testimonials.length) {
+    <section class="section">
+      <div class="container">
+        <div class="section-header section-header--centered">
+          <p class="section-eyebrow">Reviews</p>
+          <h2 class="section-title">What our customers say</h2>
+        </div>
 
-    <div class="testimonials-grid">
-      @for (testimonial of testimonials; track testimonial._id) {
-      <div class="testimonial-card">
-        <div class="testimonial-card__stars">
-          @for (star of starRange; track star) {
-          <span
-            [class]="star <= testimonial.rating ? 'star star--filled' : 'star'"
-            >&#9733;</span
-          >
+        <div class="testimonials-grid">
+          @for (testimonial of testimonials; track testimonial._id) {
+            <div class="testimonial-card">
+              <div class="testimonial-card__stars">
+                @for (star of starRange; track star) {
+                  <span
+                    [class]="star <= testimonial.rating ? 'star star--filled' : 'star'"
+                  >
+                    &#9733;
+                  </span>
+                }
+              </div>
+              <p class="testimonial-card__text">"{{ testimonial.reviewText }}"</p>
+              <p class="testimonial-card__author">{{ testimonial.userName }}</p>
+            </div>
           }
         </div>
-        <p class="testimonial-card__text">"{{ testimonial.reviewText }}"</p>
-        <p class="testimonial-card__author">- {{ testimonial.userName }}</p>
       </div>
-      }
-    </div>
-  </div>
-</section>
-} }
+    </section>
+  }
+}

@@ -2,6 +2,7 @@
   <div class="profile-header">
     <div class="profile-avatar">{{ userInitial }}</div>
     <div>
+      <p class="profile-eyebrow">My Account</p>
       <h1 class="profile-name">{{ authService.getCurrentUser()?.fullName }}</h1>
       <p class="profile-email">{{ authService.getCurrentUser()?.email }}</p>
     </div>
@@ -134,12 +135,18 @@
       <section class="profile-section">
         <h2 class="profile-section__title">Quick Links</h2>
         <a routerLink="/orders" class="profile-link">
-          <span>My Orders</span>
-          <span class="profile-link__arrow">&rarr;</span>
+          <span class="profile-link__content">
+            <lucide-angular name="package2" [size]="16"></lucide-angular>
+            <span>My Orders</span>
+          </span>
+          <lucide-angular class="profile-link__arrow" name="arrow-right" [size]="16"></lucide-angular>
         </a>
         <a routerLink="/cart" class="profile-link">
-          <span>My Cart</span>
-          <span class="profile-link__arrow">&rarr;</span>
+          <span class="profile-link__content">
+            <lucide-angular name="shopping-bag" [size]="16"></lucide-angular>
+            <span>My Cart</span>
+          </span>
+          <lucide-angular class="profile-link__arrow" name="arrow-right" [size]="16"></lucide-angular>
         </a>
       </section>
     </div>

@@ -5,11 +5,12 @@ import { map } from 'rxjs/operators';
 import { StaticPagesService } from '../../../core/services/static-pages.service';
 import { FaqItem } from '../../../core/models';
 import { Loading } from '../../../shared/components/loading/loading';
+import { LucideAngularModule } from 'lucide-angular';
 
 @Component({
   selector: 'app-faq',
   standalone: true,
-  imports: [CommonModule, Loading],
+  imports: [CommonModule, Loading, LucideAngularModule],
   templateUrl: './faq.html',
   styleUrl: './faq.css',
 })

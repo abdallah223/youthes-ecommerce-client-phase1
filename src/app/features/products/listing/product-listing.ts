@@ -1,30 +1,31 @@
-import { CommonModule } from "@angular/common";
-import { Component, DestroyRef, inject, OnInit } from "@angular/core";
-import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
-import { FormControl, ReactiveFormsModule } from "@angular/forms";
-import { ActivatedRoute, Router, RouterModule } from "@angular/router";
-import { debounceTime, distinctUntilChanged } from "rxjs/operators";
-import { firstValueFrom, map, switchMap } from "rxjs";
-import { AuthService } from "../../../core/services/auth.service";
-import { CartService } from "../../../core/services/cart.service";
-import { CategoryService } from "../../../core/services/category.service";
+import { CommonModule } from '@angular/common';
+import { Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { firstValueFrom, map, switchMap } from 'rxjs';
+import { LucideAngularModule } from 'lucide-angular';
+import { AuthService } from '../../../core/services/auth.service';
+import { CartService } from '../../../core/services/cart.service';
+import { CategoryService } from '../../../core/services/category.service';
 import {
   DEFAULT_PAGE,
   DEFAULT_SORT,
   PRODUCTS_PER_PAGE,
   SEARCH_DEBOUNCE_MS,
   SORT_OPTIONS,
-} from "../../../core/constants/app.constants";
+} from '../../../core/constants/app.constants';
 import {
   Category,
   PaginationMeta,
   Product,
   ProductQuery,
-} from "../../../core/models";
-import { ProductService } from "../../../core/services/product.service";
-import { Loading } from "../../../shared/components/loading/loading";
-import { Pagination } from "../../../shared/components/pagination/pagination";
-import { ProductCard } from "../../../shared/components/product-card/product-card";
+} from '../../../core/models';
+import { ProductService } from '../../../core/services/product.service';
+import { Loading } from '../../../shared/components/loading/loading';
+import { Pagination } from '../../../shared/components/pagination/pagination';
+import { ProductCard } from '../../../shared/components/product-card/product-card';
 
 interface ProductsState {
   products: Product[];
@@ -32,7 +33,7 @@ interface ProductsState {
 }
 
 @Component({
-  selector: "app-product-listing",
+  selector: 'app-product-listing',
   standalone: true,
   imports: [
     CommonModule,
@@ -41,9 +42,10 @@ interface ProductsState {
     ProductCard,
     Pagination,
     Loading,
+    LucideAngularModule,
   ],
-  templateUrl: "./product-listing.html",
-  styleUrl: "./product-listing.css",
+  templateUrl: './product-listing.html',
+  styleUrl: './product-listing.css',
 })
 export class ProductListing implements OnInit {
   private readonly productService = inject(ProductService);
@@ -55,7 +57,7 @@ export class ProductListing implements OnInit {
   private readonly destroyRef = inject(DestroyRef);
 
   readonly sortOptions = SORT_OPTIONS;
-  readonly searchControl = new FormControl("", { nonNullable: true });
+  readonly searchControl = new FormControl('', { nonNullable: true });
   readonly categories$ = this.categoryService
     .getCategories()
     .pipe(map((response) => response.data));
@@ -63,15 +65,15 @@ export class ProductListing implements OnInit {
   readonly productsState$ = this.route.queryParams.pipe(
     switchMap((params) => {
       const query: ProductQuery = {
-        page: Number(params["page"]) || DEFAULT_PAGE,
+        page: Number(params['page']) || DEFAULT_PAGE,
         limit: PRODUCTS_PER_PAGE,
-        sort: params["sort"] || DEFAULT_SORT,
-        category: params["category"] || undefined,
-        subcategory: params["subcategory"] || undefined,
-        search: params["search"] || undefined,
+        sort: params['sort'] || DEFAULT_SORT,
+        category: params['category'] || undefined,
+        subcategory: params['subcategory'] || undefined,
+        search: params['search'] || undefined,
       };
 
-      const searchValue = params["search"] ?? "";
+      const searchValue = params['search'] ?? '';
       if (this.searchControl.value !== searchValue) {
         this.searchControl.setValue(searchValue, { emitEvent: false });
       }
@@ -86,6 +88,7 @@ export class ProductListing implements OnInit {
   );
 
   isSidebarOpen = false;
+  subcategoriesExpanded = true;
 
   ngOnInit(): void {
     this.searchControl.valueChanges
@@ -105,7 +108,7 @@ export class ProductListing implements OnInit {
     const cleaned: Record<string, string> = {};
 
     Object.entries(merged).forEach(([key, value]) => {
-      if (value !== undefined && value !== null && value !== "") {
+      if (value !== undefined && value !== null && value !== '') {
         cleaned[key] = String(value);
       }
     });
@@ -114,6 +117,7 @@ export class ProductListing implements OnInit {
   }
 
   setCategory(id?: string): void {
+    this.subcategoriesExpanded = true;
     this.updateQuery({
       category: id,
       subcategory: undefined,
@@ -122,6 +126,7 @@ export class ProductListing implements OnInit {
   }
 
   setSubcategory(id?: string): void {
+    this.subcategoriesExpanded = true;
     this.updateQuery({ subcategory: id, page: DEFAULT_PAGE });
   }
 
@@ -135,7 +140,7 @@ export class ProductListing implements OnInit {
   }
 
   clearFilters(): void {
-    this.searchControl.setValue("", { emitEvent: false });
+    this.searchControl.setValue('', { emitEvent: false });
     void this.router.navigate([], { queryParams: { sort: DEFAULT_SORT } });
   }
 
@@ -150,11 +155,11 @@ export class ProductListing implements OnInit {
 
   get hasFilters(): boolean {
     const params = this.route.snapshot.queryParams;
-    return !!(params["category"] || params["subcategory"] || params["search"]);
+    return !!(params['category'] || params['subcategory'] || params['search']);
   }
 
   getSelectedCategory(categories: Category[]): Category | undefined {
-    const id = this.route.snapshot.queryParams["category"];
+    const id = this.route.snapshot.queryParams['category'];
     return categories.find((category) => category._id === id);
   }
 
@@ -162,7 +167,7 @@ export class ProductListing implements OnInit {
     return this.route.snapshot.queryParams;
   }
 
-  trackByProductId(_index: number, product: Product): string {
-    return product._id;
+  toggleSubcategories(): void {
+    this.subcategoriesExpanded = !this.subcategoriesExpanded;
   }
 }

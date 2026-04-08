@@ -1,67 +1,78 @@
 <div class="container checkout-page">
-  <h1 class="page-title">Checkout</h1>
+  <div class="checkout-page__header">
+    <p class="checkout-page__eyebrow">Checkout</p>
+    <h1 class="page-title">Confirm delivery</h1>
+    <p class="checkout-page__subtitle">Review your address, phone, and total before placing the order.</p>
+  </div>
 
   @if (isLoading) {
     <app-loading />
   } @else if (cart$ | async; as cart) {
     <div class="checkout-layout">
       <div class="checkout-form-wrap">
-        <h2 class="checkout-section-title">Delivery Information</h2>
+        <div class="checkout-panel">
+          <h2 class="checkout-section-title">Delivery Information</h2>
 
-        <form [formGroup]="form" (ngSubmit)="placeOrder()" novalidate>
-          @if (errorMessage) {
-            <div class="alert alert--error" style="margin-bottom: 20px">
-              {{ errorMessage }}
+          <form [formGroup]="form" (ngSubmit)="placeOrder()" novalidate>
+            @if (errorMessage) {
+              <div class="alert alert--error checkout-alert">
+                {{ errorMessage }}
+              </div>
+            }
+
+            <div class="form-group">
+              <label class="form-label">Delivery Phone</label>
+              <input
+                type="tel"
+                formControlName="deliveryPhone"
+                class="form-input"
+                [class.is-error]="f.deliveryPhone.invalid && f.deliveryPhone.touched"
+                placeholder="01XXXXXXXXX" />
+              @if (f.deliveryPhone.invalid && f.deliveryPhone.touched) {
+                <span class="form-error">Please enter a valid Egyptian phone number</span>
+              }
             </div>
-          }
 
-          <div class="form-group">
-            <label class="form-label">Delivery Phone</label>
-            <input
-              type="tel"
-              formControlName="deliveryPhone"
-              class="form-input"
-              [class.is-error]="f.deliveryPhone.invalid && f.deliveryPhone.touched"
-              placeholder="01XXXXXXXXX" />
-            @if (f.deliveryPhone.invalid && f.deliveryPhone.touched) {
-              <span class="form-error">Please enter a valid Egyptian phone number</span>
-            }
-          </div>
-
-          <div class="form-group" style="margin-top: 20px">
-            <label class="form-label">Delivery Address</label>
-            <textarea
-              formControlName="deliveryAddress"
-              class="form-input checkout-textarea"
-              [class.is-error]="f.deliveryAddress.invalid && f.deliveryAddress.touched"
-              placeholder="Street, area, city, governorate"
-              rows="3"></textarea>
-            @if (f.deliveryAddress.invalid && f.deliveryAddress.touched) {
-              <span class="form-error">Please enter a full delivery address</span>
-            }
-          </div>
-
-          <div class="payment-box">
-            <span class="payment-box__icon">COD</span>
-            <div>
-              <p class="payment-box__title">Cash on Delivery</p>
-              <p class="payment-box__note">Pay when your order arrives at your door</p>
+            <div class="form-group checkout-field">
+              <label class="form-label">Delivery Address</label>
+              <textarea
+                formControlName="deliveryAddress"
+                class="form-input checkout-textarea"
+                [class.is-error]="f.deliveryAddress.invalid && f.deliveryAddress.touched"
+                placeholder="Street, area, city, governorate"
+                rows="3"></textarea>
+              @if (f.deliveryAddress.invalid && f.deliveryAddress.touched) {
+                <span class="form-error">Please enter a full delivery address</span>
+              }
             </div>
-            <span class="badge badge--success">Only option</span>
-          </div>
 
-          <button
-            type="submit"
-            class="btn btn--primary btn--full btn--lg"
-            [class.btn--loading]="isPlacing"
-            [disabled]="isPlacing">
-            @if (!isPlacing) {
-              <span>Place Order - EGP {{ cart.total | number:'1.0-0' }}</span>
-            }
-          </button>
+            <div class="payment-box">
+              <span class="payment-box__icon">
+                <lucide-angular name="wallet-cards" [size]="20"></lucide-angular>
+              </span>
+              <div>
+                <p class="payment-box__title">Cash on Delivery</p>
+                <p class="payment-box__note">Pay when your order arrives at your door</p>
+              </div>
+              <span class="badge badge--success">Only option</span>
+            </div>
 
-          <a routerLink="/cart" class="back-link">&larr; Back to cart</a>
-        </form>
+            <button
+              type="submit"
+              class="btn btn--primary btn--full btn--lg"
+              [class.btn--loading]="isPlacing"
+              [disabled]="isPlacing">
+              @if (!isPlacing) {
+                <span>Place Order - EGP {{ cart.total | number:'1.0-0' }}</span>
+              }
+            </button>
+
+            <a routerLink="/cart" class="back-link">
+              <lucide-angular name="arrow-left" [size]="16"></lucide-angular>
+              <span>Back to cart</span>
+            </a>
+          </form>
+        </div>
       </div>
 
       <aside class="checkout-summary">

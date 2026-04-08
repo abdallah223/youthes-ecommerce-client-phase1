@@ -1,7 +1,12 @@
 @if (totalPages > 1) {
   <nav class="pagination" aria-label="Pagination">
-    <button class="pagination__btn pagination__btn--arrow" [disabled]="currentPage === 1" (click)="prev()" aria-label="Previous page">
-      &larr;
+    <button
+      class="pagination__btn pagination__btn--arrow"
+      [disabled]="currentPage === 1"
+      (click)="prev()"
+      aria-label="Previous page"
+    >
+      <lucide-angular name="chevron-left" [size]="16"></lucide-angular>
     </button>
 
     @for (page of pages; track $index) {
@@ -10,13 +15,19 @@
           + (page === currentPage ? ' pagination__btn--active' : '')
           + (!isNumber(page) ? ' pagination__btn--dots' : '')"
         [disabled]="!isNumber(page)"
-        (click)="goTo(page)">
+        (click)="goTo(page)"
+      >
         {{ page }}
       </button>
     }
 
-    <button class="pagination__btn pagination__btn--arrow" [disabled]="currentPage === totalPages" (click)="next()" aria-label="Next page">
-      &rarr;
+    <button
+      class="pagination__btn pagination__btn--arrow"
+      [disabled]="currentPage === totalPages"
+      (click)="next()"
+      aria-label="Next page"
+    >
+      <lucide-angular name="chevron-right" [size]="16"></lucide-angular>
     </button>
   </nav>
 }

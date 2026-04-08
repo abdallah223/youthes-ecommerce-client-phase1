@@ -2,13 +2,14 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { LucideAngularModule } from 'lucide-angular';
 import { StaticPagesService } from '../../../core/services/static-pages.service';
 import { AboutUsContent } from '../../../core/models';
 
 @Component({
   selector: 'app-about',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, LucideAngularModule],
   templateUrl: './about.html',
   styleUrl: './about.css',
 })

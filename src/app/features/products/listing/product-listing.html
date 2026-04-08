@@ -1,9 +1,16 @@
 @if (categories$ | async; as categories) {
   <div class="listing-header">
-    <div class="container">
-      <h1 class="listing-title">
-        {{ getSelectedCategory(categories)?.name || 'All Products' }}
-      </h1>
+    <div class="container listing-header__inner">
+      <div>
+        <p class="listing-eyebrow">Local Style Picks</p>
+        <h1 class="listing-title">
+          {{ getSelectedCategory(categories)?.name || 'All Products' }}
+        </h1>
+      </div>
+      <p class="listing-copy">
+        Explore clothing, shoes, accessories, and personal care selected for
+        everyday style in Egypt.
+      </p>
     </div>
   </div>
 
@@ -11,11 +18,16 @@
     <div class="listing-layout">
       <aside [class]="isSidebarOpen ? 'sidebar sidebar--open' : 'sidebar'">
         <div class="sidebar__header">
-          <h2 class="sidebar__title">Filters</h2>
+          <div>
+            <h2 class="sidebar__title">Filters</h2>
+            <p class="sidebar__caption">Narrow down what fits your style and needs.</p>
+          </div>
           @if (hasFilters) {
-            <button class="sidebar__clear" (click)="clearFilters()">Clear all</button>
+            <button class="sidebar__clear" (click)="clearFilters()">Reset</button>
           }
-          <button class="sidebar__close" (click)="isSidebarOpen = false">X</button>
+          <button class="sidebar__close" (click)="isSidebarOpen = false">
+            <lucide-angular name="x" [size]="16"></lucide-angular>
+          </button>
         </div>
 
         <div class="sidebar__section">
@@ -23,14 +35,16 @@
           <div class="sidebar__options">
             <button
               [class]="!getCurrentParams()['category'] ? 'sidebar__option sidebar__option--active' : 'sidebar__option'"
-              (click)="setCategory()">
-              All
+              (click)="setCategory()"
+            >
+              All categories
             </button>
 
             @for (category of categories; track category._id) {
               <button
                 [class]="getCurrentParams()['category'] === category._id ? 'sidebar__option sidebar__option--active' : 'sidebar__option'"
-                (click)="setCategory(category._id)">
+                (click)="setCategory(category._id)"
+              >
                 {{ category.name }}
               </button>
             }
@@ -40,22 +54,38 @@
         @if (getSelectedCategory(categories); as selectedCategory) {
           @if (selectedCategory.subcategories.length) {
             <div class="sidebar__section">
-              <h3 class="sidebar__section-title">Subcategory</h3>
-              <div class="sidebar__options">
-                <button
-                  [class]="!getCurrentParams()['subcategory'] ? 'sidebar__option sidebar__option--active' : 'sidebar__option'"
-                  (click)="setSubcategory()">
-                  All
-                </button>
+              <button
+                class="sidebar__section-toggle"
+                type="button"
+                (click)="toggleSubcategories()"
+                [attr.aria-expanded]="subcategoriesExpanded"
+              >
+                <span class="sidebar__section-title">Subcategory</span>
+                <lucide-angular
+                  [name]="subcategoriesExpanded ? 'chevron-up' : 'chevron-down'"
+                  [size]="16"
+                ></lucide-angular>
+              </button>
 
-                @for (subcategory of selectedCategory.subcategories; track subcategory._id) {
+              @if (subcategoriesExpanded) {
+                <div class="sidebar__options sidebar__options--nested">
                   <button
-                    [class]="getCurrentParams()['subcategory'] === subcategory._id ? 'sidebar__option sidebar__option--active' : 'sidebar__option'"
-                    (click)="setSubcategory(subcategory._id)">
-                    {{ subcategory.name }}
+                    [class]="!getCurrentParams()['subcategory'] ? 'sidebar__option sidebar__option--active' : 'sidebar__option'"
+                    (click)="setSubcategory()"
+                  >
+                    All subcategories
                   </button>
-                }
-              </div>
+
+                  @for (subcategory of selectedCategory.subcategories; track subcategory._id) {
+                    <button
+                      [class]="getCurrentParams()['subcategory'] === subcategory._id ? 'sidebar__option sidebar__option--active' : 'sidebar__option'"
+                      (click)="setSubcategory(subcategory._id)"
+                    >
+                      {{ subcategory.name }}
+                    </button>
+                  }
+                </div>
+              }
             </div>
           }
         }
@@ -68,11 +98,7 @@
       <main class="listing-main">
         <div class="listing-toolbar">
           <button class="toolbar__filter-btn" (click)="isSidebarOpen = true">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <line x1="4" y1="6" x2="20" y2="6" />
-              <line x1="8" y1="12" x2="20" y2="12" />
-              <line x1="12" y1="18" x2="20" y2="18" />
-            </svg>
+            <lucide-angular name="sliders-horizontal" [size]="16"></lucide-angular>
             Filters
             @if (hasFilters) {
               <span class="filter-dot"></span>
@@ -80,14 +106,24 @@
           </button>
 
           <div class="toolbar__search">
-            <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <circle cx="11" cy="11" r="8" />
-              <line x1="21" y1="21" x2="16.65" y2="16.65" />
-            </svg>
-            <input [formControl]="searchControl" type="search" class="search-input" placeholder="Search products..." />
+            <lucide-angular
+              class="search-icon"
+              name="search"
+              [size]="16"
+            ></lucide-angular>
+            <input
+              [formControl]="searchControl"
+              type="search"
+              class="search-input"
+              placeholder="Search clothing, shoes, accessories..."
+            />
           </div>
 
-          <select class="toolbar__sort" (change)="setSort($event)" [value]="getCurrentParams()['sort'] || 'newest'">
+          <select
+            class="toolbar__sort"
+            (change)="setSort($event)"
+            [value]="getCurrentParams()['sort'] || 'newest'"
+          >
             @for (option of sortOptions; track option.value) {
               <option [value]="option.value">{{ option.label }}</option>
             }
@@ -99,14 +135,20 @@
             @if (getCurrentParams()['search']) {
               <span class="filter-chip">
                 "{{ getCurrentParams()['search'] }}"
-                <button (click)="searchControl.setValue(''); updateQuery({ search: undefined, page: 1 })">X</button>
+                <button
+                  (click)="searchControl.setValue(''); updateQuery({ search: undefined, page: 1 })"
+                >
+                  <lucide-angular name="x" [size]="12"></lucide-angular>
+                </button>
               </span>
             }
 
             @if (getCurrentParams()['category']) {
               <span class="filter-chip">
                 {{ getSelectedCategory(categories)?.name }}
-                <button (click)="setCategory()">X</button>
+                <button (click)="setCategory()">
+                  <lucide-angular name="x" [size]="12"></lucide-angular>
+                </button>
               </span>
             }
           </div>
@@ -116,15 +158,24 @@
           @if (state.products.length) {
             <div class="products-grid">
               @for (product of state.products; track product._id) {
-                <app-product-card [product]="product" (addToCart)="onAddToCart($event)" />
+                <app-product-card
+                  [product]="product"
+                  (addToCart)="onAddToCart($event)"
+                />
               }
             </div>
           } @else {
             <div class="empty-state">
-              <p class="empty-state__icon">Search</p>
+              <div class="empty-state__icon">
+                <lucide-angular name="search" [size]="28"></lucide-angular>
+              </div>
               <h3 class="empty-state__title">No products found</h3>
-              <p class="empty-state__text">Try adjusting your filters or search term</p>
-              <button class="btn btn--outline" (click)="clearFilters()">Clear Filters</button>
+              <p class="empty-state__text">
+                Try a broader search or switch categories to see more local picks.
+              </p>
+              <button class="btn btn--outline" (click)="clearFilters()">
+                Clear Filters
+              </button>
             </div>
           }
 
@@ -132,7 +183,8 @@
             <app-pagination
               [currentPage]="state.meta.page"
               [totalPages]="state.meta.pages"
-              (pageChange)="setPage($event)" />
+              (pageChange)="setPage($event)"
+            />
           }
         } @else {
           <app-loading />

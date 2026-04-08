@@ -1,49 +1,54 @@
-import { Component, inject, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule, Router, NavigationEnd } from '@angular/router';
-import { Observable, Subscription } from 'rxjs';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { NavigationEnd, Router, RouterModule } from '@angular/router';
+import { LucideAngularModule } from 'lucide-angular';
+import { Subscription } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
+import { NotificationCounts } from '../../../core/models';
 import { AuthService } from '../../../core/services/auth.service';
 import { AdminOrderService } from '../../../core/services/admin-order.service';
-import { NotificationCounts } from '../../../core/models';
 
 interface NavItem {
-  path:  string;
+  path: string;
   label: string;
-  icon:  string;
+  icon: string;
 }
 
 const NAV_ITEMS: NavItem[] = [
-  { path: '/admin/dashboard',    label: 'Dashboard',    icon: '⊞' },
-  { path: '/admin/orders',       label: 'Orders',       icon: '📦' },
-  { path: '/admin/products',     label: 'Products',     icon: '👕' },
-  { path: '/admin/categories',   label: 'Categories',   icon: '🗂' },
-  { path: '/admin/users',        label: 'Users',        icon: '👥' },
-  { path: '/admin/testimonials', label: 'Testimonials', icon: '⭐' },
-  { path: '/admin/pages',        label: 'Pages',        icon: '📄' },
-  { path: '/admin/reports',      label: 'Reports',      icon: '📊' },
+  { path: '/admin/dashboard', label: 'Dashboard', icon: 'layout-dashboard' },
+  { path: '/admin/orders', label: 'Orders', icon: 'package' },
+  { path: '/admin/products', label: 'Products', icon: 'boxes' },
+  { path: '/admin/categories', label: 'Categories', icon: 'tags' },
+  { path: '/admin/users', label: 'Users', icon: 'users' },
+  { path: '/admin/testimonials', label: 'Testimonials', icon: 'message-square-quote' },
+  { path: '/admin/pages', label: 'Pages', icon: 'file-text' },
+  { path: '/admin/reports', label: 'Reports', icon: 'chart-column' },
 ];
 
 @Component({
   selector: 'app-admin-layout',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [
+    CommonModule,
+    RouterModule,
+    LucideAngularModule,
+  ],
   templateUrl: './admin-layout.html',
   styleUrl: './admin-layout.css',
 })
 export class AdminLayout implements OnInit, OnDestroy {
-  private readonly authService  = inject(AuthService);
+  private readonly authService = inject(AuthService);
   private readonly orderService = inject(AdminOrderService);
-  private readonly router       = inject(Router);
+  private readonly router = inject(Router);
 
   private notificationSubscription: Subscription | null = null;
-  private routerSubscription:       Subscription | null = null;
+  private routerSubscription: Subscription | null = null;
 
   readonly navItems = NAV_ITEMS;
 
   notifications: NotificationCounts = { newOrders: 0, outOfStock: 0 };
   isSidebarOpen = false;
-  currentPath   = '';
+  currentPath = '';
 
   get adminName(): string {
     return this.authService.getCurrentUser()?.fullName ?? 'Admin';
@@ -56,34 +61,40 @@ export class AdminLayout implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.currentPath = this.router.url;
 
-    this.routerSubscription = this.router.events.pipe(
-      filter(e => e instanceof NavigationEnd),
-      map(e => (e as NavigationEnd).url)
-    ).subscribe(url => {
-      this.currentPath  = url;
-      this.isSidebarOpen = false;
-    });
+    this.routerSubscription = this.router.events
+      .pipe(
+        filter((event) => event instanceof NavigationEnd),
+        map((event) => (event as NavigationEnd).url),
+      )
+      .subscribe((url) => {
+        this.currentPath = url;
+        this.isSidebarOpen = false;
+      });
 
     this.loadNotifications();
   }
 
   loadNotifications(): void {
     this.notificationSubscription?.unsubscribe();
-    this.notificationSubscription = this.orderService.getNotifications().subscribe({
-      next: res => { this.notifications = res.data; },
-    });
+    this.notificationSubscription = this.orderService
+      .getNotifications()
+      .subscribe({
+        next: (response) => {
+          this.notifications = response.data;
+        },
+      });
   }
 
   isActive(path: string): boolean {
     return this.currentPath.startsWith(path);
   }
 
-  logout(): void { this.authService.logout(); }
+  logout(): void {
+    this.authService.logout();
+  }
 
   ngOnDestroy(): void {
     this.notificationSubscription?.unsubscribe();
     this.routerSubscription?.unsubscribe();
   }
 }
-
-

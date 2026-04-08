@@ -5,11 +5,12 @@ import { Subscription } from 'rxjs';
 import { AdminOrderService } from '../../../core/services/admin-order.service';
 import { SalesReport } from '../../../core/models';
 import { Loading } from '../../../shared/components/loading/loading';
+import { LucideAngularModule } from 'lucide-angular';
 
 @Component({
   selector: 'app-reports',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, Loading],
+  imports: [CommonModule, ReactiveFormsModule, Loading, LucideAngularModule],
   templateUrl: './reports.html',
   styleUrl: './reports.css',
 })

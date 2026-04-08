@@ -17,7 +17,7 @@
 
 .testimonials-title {
   font-family: var(--font-display);
-  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-size: clamp(1.85rem, 2.6vw, 2.55rem);
   font-weight: var(--weight-light);
   letter-spacing: var(--tracking-tight);
   color: var(--color-black);
@@ -134,7 +134,7 @@
 
 .submit-title {
   font-family: var(--font-display);
-  font-size: var(--text-2xl);
+  font-size: clamp(1.55rem, 2vw, 2rem);
   font-weight: var(--weight-light);
   letter-spacing: var(--tracking-tight);
   color: var(--color-black);

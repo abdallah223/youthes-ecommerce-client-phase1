@@ -1,13 +1,15 @@
 @let isAdminRoute = (isAdminRoute$ | async) ?? false;
 
 @if (!isAdminRoute) {
-  <app-navbar />
-}
-
-<main [class.main-content]="!isAdminRoute">
-  <router-outlet />
-</main>
-
-@if (!isAdminRoute) {
-  <app-footer />
+  <div class="theme-storefront app-shell">
+    <app-navbar />
+    <main class="main-content main-content--store">
+      <router-outlet />
+    </main>
+    <app-footer />
+  </div>
+} @else {
+  <main class="main-content">
+    <router-outlet />
+  </main>
 }

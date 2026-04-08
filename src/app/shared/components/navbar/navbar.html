@@ -1,75 +1,79 @@
 <header [class]="navbarClass">
   <div class="navbar__inner">
-    <a routerLink="/" class="navbar__logo" (click)="closeMobile()">Youthes</a>
+    <a routerLink="/" class="navbar__logo" (click)="closeMobile()">
+      <span class="navbar__logo-mark">Y</span>
+      <span class="navbar__logo-copy">
+        <span class="navbar__logo-name">Youthes</span>
+        <span class="navbar__logo-tag">Local fashion and care</span>
+      </span>
+    </a>
 
     <nav class="navbar__links">
-      <a routerLink="/products" routerLinkActive="active" class="navbar__link"
-        >Shop</a
-      >
-      <a routerLink="/about" routerLinkActive="active" class="navbar__link"
-        >About</a
-      >
-      <a routerLink="/faq" routerLinkActive="active" class="navbar__link"
-        >FAQ</a
-      >
+      <a routerLink="/products" routerLinkActive="active" class="navbar__link">
+        Shop
+      </a>
+      <a routerLink="/about" routerLinkActive="active" class="navbar__link">
+        About
+      </a>
+      <a routerLink="/faq" routerLinkActive="active" class="navbar__link">
+        FAQ
+      </a>
       <a
         routerLink="/testimonials"
         routerLinkActive="active"
         class="navbar__link"
-        >Reviews</a
       >
-      <a routerLink="/contact" routerLinkActive="active" class="navbar__link"
-        >Contact</a
-      >
+        Reviews
+      </a>
+      <a routerLink="/contact" routerLinkActive="active" class="navbar__link">
+        Contact
+      </a>
     </nav>
 
     <div class="navbar__actions">
-      @if (currentUser$ | async; as user) { @if (isAdminUser(user)) {
-      <a routerLink="/admin" class="navbar__action-link">Admin</a>
-      }
-      <a routerLink="/orders" class="navbar__action-link">Orders</a>
-      <a routerLink="/profile" class="navbar__action-link navbar__user-link">
-        <span class="navbar__user-avatar">{{ userInitial(user) }}</span>
-        {{ user.fullName }}
-      </a>
-      <a routerLink="/cart" class="navbar__cart">
-        <svg
-          width="20"
-          height="20"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="1.5"
-        >
-          <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
-          <line x1="3" y1="6" x2="21" y2="6" />
-          <path d="M16 10a4 4 0 01-8 0" />
-        </svg>
-        @if (itemCount$ | async; as count) {
-        <span class="navbar__cart-badge">{{ count }}</span>
+      @if (currentUser$ | async; as user) {
+        @if (isAdminUser(user)) {
+          <a routerLink="/admin" class="navbar__action-link navbar__pill-link">
+            <lucide-angular name="shield" [size]="16"></lucide-angular>
+            Admin
+          </a>
         }
-      </a>
-      <button class="navbar__action-link" (click)="logout()">Logout</button>
+        <a routerLink="/orders" class="navbar__action-link">
+          <lucide-angular name="package-2" [size]="16"></lucide-angular>
+          Orders
+        </a>
+        <a
+          routerLink="/profile"
+          class="navbar__action-link navbar__user-link"
+        >
+          <span class="navbar__user-avatar">{{ userInitial(user) }}</span>
+          <span>{{ user.fullName }}</span>
+        </a>
+        <a routerLink="/cart" class="navbar__cart" aria-label="Cart">
+          <lucide-angular name="shopping-bag" [size]="20"></lucide-angular>
+          @if (itemCount$ | async; as count) {
+            <span class="navbar__cart-badge">{{ count }}</span>
+          }
+        </a>
+        <button class="navbar__action-link" (click)="logout()">
+          <lucide-angular name="log-out" [size]="16"></lucide-angular>
+          Logout
+        </button>
       } @else {
-      <a routerLink="/cart" class="navbar__cart">
-        <svg
-          width="20"
-          height="20"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="1.5"
-        >
-          <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
-          <line x1="3" y1="6" x2="21" y2="6" />
-          <path d="M16 10a4 4 0 01-8 0" />
-        </svg>
-        @if (itemCount$ | async; as count) {
-        <span class="navbar__cart-badge">{{ count }}</span>
-        }
-      </a>
-      <a routerLink="/login" class="navbar__action-link">Login</a>
-      <a routerLink="/register" class="btn btn--primary btn--sm">Register</a>
+        <a routerLink="/cart" class="navbar__cart" aria-label="Cart">
+          <lucide-angular name="shopping-bag" [size]="20"></lucide-angular>
+          @if (itemCount$ | async; as count) {
+            <span class="navbar__cart-badge">{{ count }}</span>
+          }
+        </a>
+        <a routerLink="/login" class="navbar__action-link">
+          <lucide-angular name="user-round" [size]="16"></lucide-angular>
+          Login
+        </a>
+        <a routerLink="/register" class="btn btn--primary btn--sm">
+          <lucide-angular name="arrow-up-right" [size]="16"></lucide-angular>
+          Join Now
+        </a>
       }
     </div>
 
@@ -79,9 +83,10 @@
       [attr.aria-expanded]="isMobileOpen"
       aria-label="Toggle menu"
     >
-      <span [class]="isMobileOpen ? 'hamburger hamburger--open' : 'hamburger'">
-        <span></span><span></span><span></span>
-      </span>
+      <lucide-angular
+        [name]="isMobileOpen ? 'x' : 'menu'"
+        [size]="20"
+      ></lucide-angular>
     </button>
   </div>
 
@@ -92,82 +97,117 @@
         routerLinkActive="active"
         class="navbar__mobile-link"
         (click)="closeMobile()"
-        >Shop</a
       >
+        Shop
+      </a>
       <a
         routerLink="/about"
         routerLinkActive="active"
         class="navbar__mobile-link"
         (click)="closeMobile()"
-        >About</a
       >
+        About
+      </a>
       <a
         routerLink="/faq"
         routerLinkActive="active"
         class="navbar__mobile-link"
         (click)="closeMobile()"
-        >FAQ</a
       >
+        FAQ
+      </a>
       <a
         routerLink="/testimonials"
         routerLinkActive="active"
         class="navbar__mobile-link"
         (click)="closeMobile()"
-        >Reviews</a
       >
+        Reviews
+      </a>
       <a
         routerLink="/contact"
         routerLinkActive="active"
         class="navbar__mobile-link"
         (click)="closeMobile()"
-        >Contact</a
       >
-
-      <hr class="divider" style="margin-block: 8px" />
-
-      @if (currentUser$ | async; as user) { @if (isAdminUser(user)) {
-      <a routerLink="/admin" class="navbar__mobile-link" (click)="closeMobile()"
-        >Admin Panel</a
-      >
-      }
-      <a routerLink="/cart" class="navbar__mobile-link" (click)="closeMobile()">
-        Cart @if (itemCount$ | async; as count) {
-        <span>({{ count }})</span>
-        }
+        Contact
       </a>
-      <a
-        routerLink="/orders"
-        class="navbar__mobile-link"
-        (click)="closeMobile()"
-        >My Orders</a
-      >
-      <a
-        routerLink="/profile"
-        class="navbar__mobile-link"
-        (click)="closeMobile()"
-        >Profile - {{ user.fullName }}</a
-      >
-      <button
-        class="navbar__mobile-link navbar__mobile-link--btn"
-        (click)="logout()"
-      >
-        Logout
-      </button>
+
+      <hr class="divider navbar__divider" />
+
+      @if (currentUser$ | async; as user) {
+        @if (isAdminUser(user)) {
+          <a
+            routerLink="/admin"
+            class="navbar__mobile-link navbar__mobile-link--icon"
+            (click)="closeMobile()"
+          >
+            <lucide-angular name="shield" [size]="16"></lucide-angular>
+            Admin Panel
+          </a>
+        }
+        <a
+          routerLink="/cart"
+          class="navbar__mobile-link navbar__mobile-link--icon"
+          (click)="closeMobile()"
+        >
+          <lucide-angular name="shopping-bag" [size]="16"></lucide-angular>
+          Cart
+          @if (itemCount$ | async; as count) {
+            <span class="navbar__mobile-count">{{ count }}</span>
+          }
+        </a>
+        <a
+          routerLink="/orders"
+          class="navbar__mobile-link navbar__mobile-link--icon"
+          (click)="closeMobile()"
+        >
+          <lucide-angular name="package-2" [size]="16"></lucide-angular>
+          My Orders
+        </a>
+        <a
+          routerLink="/profile"
+          class="navbar__mobile-link navbar__mobile-link--icon"
+          (click)="closeMobile()"
+        >
+          <lucide-angular name="user-round" [size]="16"></lucide-angular>
+          {{ user.fullName }}
+        </a>
+        <button
+          class="navbar__mobile-link navbar__mobile-link--btn navbar__mobile-link--icon"
+          (click)="logout()"
+        >
+          <lucide-angular name="log-out" [size]="16"></lucide-angular>
+          Logout
+        </button>
       } @else {
-      <a routerLink="/cart" class="navbar__mobile-link" (click)="closeMobile()">
-        Cart @if (itemCount$ | async; as count) {
-        <span>({{ count }})</span>
-        }
-      </a>
-      <a routerLink="/login" class="navbar__mobile-link" (click)="closeMobile()"
-        >Login</a
-      >
-      <a
-        routerLink="/register"
-        class="navbar__mobile-link"
-        (click)="closeMobile()"
-        >Register</a
-      >
+        <a
+          routerLink="/cart"
+          class="navbar__mobile-link navbar__mobile-link--icon"
+          (click)="closeMobile()"
+        >
+          <lucide-angular name="shopping-bag" [size]="16"></lucide-angular>
+          Cart
+          @if (itemCount$ | async; as count) {
+            <span class="navbar__mobile-count">{{ count }}</span>
+          }
+        </a>
+        <a
+          routerLink="/login"
+          class="navbar__mobile-link navbar__mobile-link--icon"
+          (click)="closeMobile()"
+        >
+          <lucide-angular name="user-round" [size]="16"></lucide-angular>
+          Login
+        </a>
+        <a
+          routerLink="/register"
+          class="navbar__mobile-link navbar__mobile-link--icon"
+          (click)="closeMobile()"
+        >
+          <lucide-angular name="arrow-up-right" [size]="16"></lucide-angular>
+          Register
+        </a>
       }
     </nav>
   </div>

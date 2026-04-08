@@ -1,105 +1,163 @@
-/* ── Design Tokens ───────────────────────────────────────────── */
-/* Aesthetic: Clean luxury minimal — editorial calm             */
-/* Fonts: Cormorant Garamond (display) + DM Sans (body)         */
-
+/* Core tokens shared by storefront and admin themes */
 :root {
-  /* ── Colors ─────────────────────────────────────────────────── */
-  --color-white:        #FAFAF8;
-  --color-surface:      #F5F4F0;
-  --color-border:       #E8E6E1;
-  --color-border-dark:  #C9C6BE;
-  --color-muted:        #9B9690;
-  --color-secondary:    #6B6760;
-  --color-text:         #1E1C1A;
-  --color-black:        #111110;
-
-  --color-accent:       #B8956A;
-  --color-accent-light: #D4B896;
-  --color-accent-dark:  #8F6F4A;
-
-  --color-success:      #4A7C59;
-  --color-warning:      #C17B2E;
-  --color-error:        #B84444;
-  --color-info:         #3A6B8A;
-
-  --color-overlay:      rgba(17, 17, 16, 0.50);
-  --color-overlay-dark: rgba(17, 17, 16, 0.75);
-
-  /* ── Typography ─────────────────────────────────────────────── */
-  --font-display: 'Cormorant Garamond', Georgia, serif;
-  --font-body:    'DM Sans', 'Helvetica Neue', sans-serif;
-
-  --text-xs:   0.75rem;
-  --text-sm:   0.875rem;
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
   --text-base: 1rem;
-  --text-md:   1.125rem;
-  --text-lg:   1.25rem;
-  --text-xl:   1.5rem;
-  --text-2xl:  1.875rem;
-  --text-3xl:  2.25rem;
-  --text-4xl:  3rem;
-  --text-5xl:  4rem;
+  --text-md: 1.125rem;
+  --text-lg: 1.375rem;
+  --text-xl: 1.75rem;
+  --text-2xl: 2.25rem;
+  --text-3xl: 3rem;
+  --text-4xl: 4.25rem;
+  --text-5xl: 5.75rem;
 
-  --weight-light:    300;
-  --weight-regular:  400;
-  --weight-medium:   500;
+  --weight-light: 300;
+  --weight-regular: 400;
+  --weight-medium: 500;
   --weight-semibold: 600;
+  --weight-bold: 700;
 
-  --leading-tight:   1.2;
-  --leading-snug:    1.4;
-  --leading-normal:  1.6;
-  --leading-relaxed: 1.8;
+  --leading-tight: 1.05;
+  --leading-snug: 1.25;
+  --leading-normal: 1.55;
+  --leading-relaxed: 1.75;
 
-  --tracking-tight:   -0.03em;
-  --tracking-normal:   0;
-  --tracking-wide:     0.06em;
-  --tracking-widest:   0.12em;
+  --tracking-tight: -0.05em;
+  --tracking-normal: 0;
+  --tracking-wide: 0.08em;
+  --tracking-widest: 0.18em;
 
-  /* ── Spacing ────────────────────────────────────────────────── */
-  --space-1:  0.25rem;
-  --space-2:  0.5rem;
-  --space-3:  0.75rem;
-  --space-4:  1rem;
-  --space-5:  1.25rem;
-  --space-6:  1.5rem;
-  --space-8:  2rem;
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
   --space-10: 2.5rem;
   --space-12: 3rem;
   --space-16: 4rem;
   --space-20: 5rem;
   --space-24: 6rem;
+  --space-28: 7rem;
 
-  /* ── Layout ─────────────────────────────────────────────────── */
-  --container-md:  768px;
-  --container-lg:  1024px;
-  --container-xl:  1280px;
+  --container-md: 780px;
+  --container-lg: 1080px;
+  --container-xl: 1240px;
   --container-2xl: 1440px;
+  --navbar-height: 74px;
 
-  --navbar-height: 64px;
-
-  /* ── Borders ────────────────────────────────────────────────── */
-  --radius-sm:   2px;
-  --radius-md:   4px;
-  --radius-lg:   8px;
-  --radius-xl:   12px;
+  --radius-sm: 10px;
+  --radius-md: 18px;
+  --radius-lg: 28px;
+  --radius-xl: 42px;
   --radius-full: 9999px;
 
-  /* ── Shadows ────────────────────────────────────────────────── */
-  --shadow-xs: 0 1px 2px  rgba(17, 17, 16, 0.06);
-  --shadow-sm: 0 2px 8px  rgba(17, 17, 16, 0.08);
-  --shadow-md: 0 4px 16px rgba(17, 17, 16, 0.10);
-  --shadow-lg: 0 8px 32px rgba(17, 17, 16, 0.12);
-  --shadow-xl: 0 16px 48px rgba(17, 17, 16, 0.14);
+  --shadow-xs: 0 8px 18px rgba(16, 13, 10, 0.06);
+  --shadow-sm: 0 16px 30px rgba(16, 13, 10, 0.08);
+  --shadow-md: 0 24px 56px rgba(16, 13, 10, 0.12);
+  --shadow-lg: 0 36px 80px rgba(16, 13, 10, 0.16);
+  --shadow-xl: 0 46px 110px rgba(16, 13, 10, 0.2);
 
-  /* ── Transitions ────────────────────────────────────────────── */
-  --transition-fast:   150ms ease;
-  --transition-base:   250ms ease;
-  --transition-slow:   400ms ease;
-  --transition-slower: 600ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --transition-fast: 160ms ease;
+  --transition-base: 240ms ease;
+  --transition-slow: 420ms cubic-bezier(0.22, 1, 0.36, 1);
+  --transition-slower: 640ms cubic-bezier(0.22, 1, 0.36, 1);
 
-  /* ── Z-index ────────────────────────────────────────────────── */
   --z-dropdown: 100;
-  --z-sticky:   200;
-  --z-overlay:  300;
-  --z-modal:    400;
+  --z-sticky: 200;
+  --z-overlay: 300;
+  --z-modal: 400;
+
+  --icon-size-xs: 14px;
+  --icon-size-sm: 18px;
+  --icon-size-md: 22px;
+  --icon-size-lg: 28px;
+
+  --font-display: "Syne", "Arial Narrow", sans-serif;
+  --font-body: "Manrope", "Segoe UI", sans-serif;
+
+  --color-page: #f4ede4;
+  --color-white: #fffaf4;
+  --color-surface: #ece0d1;
+  --color-surface-strong: #e2d0bb;
+  --color-border: #c9b59c;
+  --color-border-dark: #866d56;
+  --color-muted: #796553;
+  --color-secondary: #3d332a;
+  --color-text: #17120d;
+  --color-black: #110d09;
+  --color-accent: #ca6b2c;
+  --color-accent-light: #f4b27f;
+  --color-accent-dark: #93461d;
+  --color-info: #156f72;
+  --color-success: #0d7a52;
+  --color-warning: #b56a19;
+  --color-error: #b63a2c;
+  --color-overlay: rgba(12, 10, 8, 0.56);
+  --color-overlay-dark: rgba(12, 10, 8, 0.8);
+}
+
+.theme-storefront {
+  --font-display: "Syne", "Arial Narrow", sans-serif;
+  --font-body: "Manrope", "Segoe UI", sans-serif;
+
+  --color-page: #f4ede4;
+  --color-white: #fffaf4;
+  --color-surface: #ece0d1;
+  --color-surface-strong: #e2d0bb;
+  --color-border: #c9b59c;
+  --color-border-dark: #866d56;
+  --color-muted: #796553;
+  --color-secondary: #3d332a;
+  --color-text: #17120d;
+  --color-black: #110d09;
+  --color-accent: #ca6b2c;
+  --color-accent-light: #f4b27f;
+  --color-accent-dark: #93461d;
+  --color-info: #156f72;
+  --color-success: #0d7a52;
+  --color-warning: #b56a19;
+  --color-error: #b63a2c;
+
+  --radius-sm: 12px;
+  --radius-md: 20px;
+  --radius-lg: 32px;
+  --radius-xl: 48px;
+}
+
+.theme-admin {
+  --font-display: "Manrope", "Segoe UI", sans-serif;
+  --font-body: "Manrope", "Segoe UI", sans-serif;
+
+  --color-page: #eef2f7;
+  --color-white: #ffffff;
+  --color-surface: #e4ebf3;
+  --color-surface-strong: #d6e0ec;
+  --color-border: #c9d3df;
+  --color-border-dark: #7c8ea3;
+  --color-muted: #66778b;
+  --color-secondary: #334155;
+  --color-text: #17212f;
+  --color-black: #0f172a;
+  --color-accent: #0f766e;
+  --color-accent-light: #7dd3c7;
+  --color-accent-dark: #115e59;
+  --color-info: #2563eb;
+  --color-success: #15803d;
+  --color-warning: #b45309;
+  --color-error: #b91c1c;
+  --color-overlay: rgba(15, 23, 42, 0.5);
+  --color-overlay-dark: rgba(15, 23, 42, 0.78);
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+
+  --shadow-xs: 0 4px 10px rgba(15, 23, 42, 0.04);
+  --shadow-sm: 0 12px 22px rgba(15, 23, 42, 0.07);
+  --shadow-md: 0 18px 36px rgba(15, 23, 42, 0.1);
+  --shadow-lg: 0 28px 56px rgba(15, 23, 42, 0.14);
+  --shadow-xl: 0 36px 76px rgba(15, 23, 42, 0.18);
 }

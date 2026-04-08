@@ -1,21 +1,25 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { LucideAngularModule } from 'lucide-angular';
 
 @Component({
   selector: 'app-pagination',
   standalone: true,
-  imports: [CommonModule],
+  imports: [
+    CommonModule,
+    LucideAngularModule,
+  ],
   templateUrl: './pagination.html',
   styleUrl: './pagination.css',
 })
 export class Pagination {
   @Input() currentPage = 1;
-  @Input() totalPages  = 1;
+  @Input() totalPages = 1;
   @Output() pageChange = new EventEmitter<number>();
 
   get pages(): (number | '...')[] {
     const total = this.totalPages;
-    const cur   = this.currentPage;
+    const cur = this.currentPage;
 
     if (total <= 7) {
       return Array.from({ length: total }, (_, i) => i + 1);
@@ -23,14 +27,14 @@ export class Pagination {
 
     const pages: (number | '...')[] = [1];
 
-    if (cur > 3)          pages.push('...');
+    if (cur > 3) pages.push('...');
 
     const start = Math.max(2, cur - 1);
-    const end   = Math.min(total - 1, cur + 1);
+    const end = Math.min(total - 1, cur + 1);
 
     for (let i = start; i <= end; i++) pages.push(i);
 
-    if (cur < total - 2)  pages.push('...');
+    if (cur < total - 2) pages.push('...');
 
     pages.push(total);
     return pages;
@@ -46,12 +50,12 @@ export class Pagination {
   }
 
   next(): void {
-    if (this.currentPage < this.totalPages) this.pageChange.emit(this.currentPage + 1);
+    if (this.currentPage < this.totalPages) {
+      this.pageChange.emit(this.currentPage + 1);
+    }
   }
 
   isNumber(page: number | '...'): boolean {
     return typeof page === 'number';
   }
 }
-
-

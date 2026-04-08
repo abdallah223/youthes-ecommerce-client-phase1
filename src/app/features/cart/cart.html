@@ -1,5 +1,11 @@
 <div class="container cart-page">
-  <h1 class="page-title">Shopping Cart</h1>
+  <div class="cart-page__header">
+    <div>
+      <p class="cart-page__eyebrow">Bag Review</p>
+      <h1 class="page-title">Your cart</h1>
+      <p class="cart-page__subtitle">Review your picks before checkout and delivery.</p>
+    </div>
+  </div>
 
   @if (isLoading) {
     <app-loading />
@@ -7,9 +13,11 @@
     @if (!isLoggedIn) {
       @if (!guestItems.length) {
         <div class="empty-state">
-          <p class="empty-state__icon">Cart</p>
+          <div class="empty-state__icon">
+            <lucide-angular name="shopping-bag" [size]="34"></lucide-angular>
+          </div>
           <h2 class="empty-state__title">Your cart is empty</h2>
-          <p class="empty-state__text">Looks like you haven't added anything yet.</p>
+          <p class="empty-state__text">Looks like you haven&apos;t added anything yet.</p>
           <a routerLink="/products" class="btn btn--primary">Start Shopping</a>
         </div>
       } @else {
@@ -37,12 +45,18 @@
                   <button class="qty-btn" (click)="onGuestUpdateQuantity(item, item.quantity + 1)" [disabled]="item.quantity >= item.product.stockCount">+</button>
                 </div>
                 <p class="cart-item__subtotal">EGP {{ item.subtotal | number:'1.0-0' }}</p>
-                <button class="cart-item__remove" (click)="onGuestRemoveItem(item)" aria-label="Remove">X</button>
+                <button class="cart-item__remove" (click)="onGuestRemoveItem(item)" aria-label="Remove">
+                  <lucide-angular name="x" [size]="16"></lucide-angular>
+                </button>
               </div>
             }
           </div>
 
           <aside class="cart-summary">
+            <div class="cart-summary__kicker">
+              <lucide-angular name="wallet-cards" [size]="16"></lucide-angular>
+              <span>Guest cart</span>
+            </div>
             <h2 class="cart-summary__title">Order Summary</h2>
             <div class="cart-summary__rows">
               <div class="summary-row">
@@ -57,7 +71,7 @@
             <a routerLink="/login" [queryParams]="{ returnUrl: '/checkout' }" class="btn btn--primary btn--full">
               Sign In to Checkout
             </a>
-            <a routerLink="/register" class="btn btn--outline btn--full" style="margin-top: 8px">
+            <a routerLink="/register" class="btn btn--outline btn--full cart-summary__secondary">
               Create Account
             </a>
           </aside>
@@ -67,9 +81,11 @@
       @if (cart$ | async; as cart) {
         @if (!cart.items.length) {
           <div class="empty-state">
-            <p class="empty-state__icon">Cart</p>
+            <div class="empty-state__icon">
+              <lucide-angular name="shopping-bag" [size]="34"></lucide-angular>
+            </div>
             <h2 class="empty-state__title">Your cart is empty</h2>
-            <p class="empty-state__text">Looks like you haven't added anything yet.</p>
+            <p class="empty-state__text">Looks like you haven&apos;t added anything yet.</p>
             <a routerLink="/products" class="btn btn--primary">Start Shopping</a>
           </div>
         } @else {
@@ -104,12 +120,18 @@
                     <button class="qty-btn" (click)="onUpdateQuantity(item, item.quantity + 1)" [disabled]="item.quantity >= item.product.stockCount">+</button>
                   </div>
                   <p class="cart-item__subtotal">EGP {{ item.subtotal | number:'1.0-0' }}</p>
-                  <button class="cart-item__remove" (click)="onRemoveItem(item)" aria-label="Remove">X</button>
+                  <button class="cart-item__remove" (click)="onRemoveItem(item)" aria-label="Remove">
+                    <lucide-angular name="x" [size]="16"></lucide-angular>
+                  </button>
                 </div>
               }
             </div>
 
             <aside class="cart-summary">
+              <div class="cart-summary__kicker">
+                <lucide-angular name="package2" [size]="16"></lucide-angular>
+                <span>Ready for delivery</span>
+              </div>
               <h2 class="cart-summary__title">Order Summary</h2>
               <div class="cart-summary__rows">
                 <div class="summary-row"><span>Subtotal ({{ cart.itemCount }} items)</span><span>EGP {{ cart.subtotal | number:'1.0-0' }}</span></div>
@@ -117,7 +139,7 @@
                 <div class="summary-row summary-row--total"><span>Total</span><span>EGP {{ cart.total | number:'1.0-0' }}</span></div>
               </div>
               <a routerLink="/checkout" class="btn btn--primary btn--full">Proceed to Checkout</a>
-              <a routerLink="/products" class="btn btn--ghost btn--full" style="margin-top: 8px; justify-content: center">Continue Shopping</a>
+              <a routerLink="/products" class="btn btn--ghost btn--full cart-summary__secondary">Continue Shopping</a>
               <p class="summary-note">Cash on delivery - Egypt-wide</p>
             </aside>
           </div>

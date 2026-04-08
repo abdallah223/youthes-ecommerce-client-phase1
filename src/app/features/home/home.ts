@@ -1,11 +1,15 @@
-import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { firstValueFrom, map } from 'rxjs';
+import { LucideAngularModule } from 'lucide-angular';
+import {
+  MAX_HOME_FEATURED,
+  MAX_HOME_TESTIMONIALS,
+} from '../../core/constants/app.constants';
+import { Product } from '../../core/models';
 import { AuthService } from '../../core/services/auth.service';
 import { CartService } from '../../core/services/cart.service';
-import { MAX_HOME_FEATURED, MAX_HOME_TESTIMONIALS } from '../../core/constants/app.constants';
-import { Product } from '../../core/models';
 import { ProductService } from '../../core/services/product.service';
 import { TestimonialService } from '../../core/services/testimonial.service';
 import { Loading } from '../../shared/components/loading/loading';
@@ -14,7 +18,13 @@ import { ProductCard } from '../../shared/components/product-card/product-card';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, RouterModule, ProductCard, Loading],
+  imports: [
+    CommonModule,
+    RouterModule,
+    ProductCard,
+    Loading,
+    LucideAngularModule,
+  ],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
@@ -41,13 +51,5 @@ export class Home {
     }
 
     await firstValueFrom(this.cartService.addItem(product._id, 1));
-  }
-
-  trackByProductId(_index: number, product: Product): string {
-    return product._id;
-  }
-
-  trackByTestimonialId(_index: number, testimonial: { _id: string }): string {
-    return testimonial._id;
   }
 }

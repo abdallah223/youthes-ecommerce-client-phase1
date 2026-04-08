@@ -2,10 +2,27 @@
   <div class="footer__inner container">
     <div class="footer__top">
       <div class="footer__brand">
+        <p class="footer__eyebrow">A local Egyptian lifestyle brand</p>
         <a routerLink="/" class="footer__logo">Youthes</a>
         <p class="footer__tagline">
-          Contemporary fashion for the modern generation.
+          Shop women's clothing, men's clothing, shoes, accessories, and
+          personal care designed for everyday life in Egypt.
         </p>
+
+        <div class="footer__signals">
+          <div class="footer__signal">
+            <lucide-angular name="map-pinned" [size]="18"></lucide-angular>
+            Egypt-wide shipping
+          </div>
+          <div class="footer__signal">
+            <lucide-angular name="wallet-cards" [size]="18"></lucide-angular>
+            Cash on delivery
+          </div>
+          <div class="footer__signal">
+            <lucide-angular name="sparkles" [size]="18"></lucide-angular>
+            New arrivals and essentials
+          </div>
+        </div>
       </div>
 
       <div class="footer__columns">
@@ -16,11 +33,15 @@
             routerLink="/products"
             [queryParams]="{ sort: 'newest' }"
             class="footer__col-link"
-            >New Arrivals</a
           >
+            New Arrivals
+          </a>
+          <a routerLink="/products" class="footer__col-link">
+            Best Sellers
+          </a>
         </div>
         <div class="footer__col">
-          <h4 class="footer__col-title">Info</h4>
+          <h4 class="footer__col-title">Discover</h4>
           <a routerLink="/about" class="footer__col-link">About Us</a>
           <a routerLink="/faq" class="footer__col-link">FAQ</a>
           <a routerLink="/testimonials" class="footer__col-link">Reviews</a>
@@ -29,11 +50,11 @@
         <div class="footer__col">
           <h4 class="footer__col-title">Account</h4>
           @if (isLoggedIn$ | async) {
-          <a routerLink="/orders" class="footer__col-link">My Orders</a>
-          <a routerLink="/profile" class="footer__col-link">Profile</a>
+            <a routerLink="/orders" class="footer__col-link">My Orders</a>
+            <a routerLink="/profile" class="footer__col-link">Profile</a>
           } @else {
-          <a routerLink="/login" class="footer__col-link">Login</a>
-          <a routerLink="/register" class="footer__col-link">Register</a>
+            <a routerLink="/login" class="footer__col-link">Login</a>
+            <a routerLink="/register" class="footer__col-link">Register</a>
           }
         </div>
       </div>
@@ -41,9 +62,13 @@
 
     <div class="footer__bottom">
       <p class="footer__copy">
+        <lucide-angular name="shopping-bag" [size]="16"></lucide-angular>
         &copy; {{ currentYear }} Youthes. All rights reserved.
       </p>
-      <p class="footer__note">Cash on delivery · Egypt-wide shipping</p>
+      <a routerLink="/products" class="footer__note">
+        Explore the full collection
+        <lucide-angular name="arrow-up-right" [size]="16"></lucide-angular>
+      </a>
     </div>
   </div>
 </footer>

@@ -5,13 +5,14 @@ import { Observable, Subscription } from "rxjs";
 import { AdminCategoryService } from "../../../core/services/admin-category.service";
 import { Category } from "../../../core/models";
 import { Loading } from "../../../shared/components/loading/loading";
+import { LucideAngularModule } from "lucide-angular";
 
 type ModalMode = "createCat" | "editCat" | "createSub" | "editSub" | null;
 
 @Component({
   selector: "app-categories",
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, Loading],
+  imports: [CommonModule, ReactiveFormsModule, Loading, LucideAngularModule],
   templateUrl: "./categories.html",
   styleUrl: "./categories.css",
 })

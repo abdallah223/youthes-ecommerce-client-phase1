@@ -1,14 +1,19 @@
-import { Component, HostListener, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, HostListener, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { LucideAngularModule } from 'lucide-angular';
+import { User } from '../../../core/models';
 import { AuthService } from '../../../core/services/auth.service';
 import { CartService } from '../../../core/services/cart.service';
-import { User } from '../../../core/models';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [
+    CommonModule,
+    RouterModule,
+    LucideAngularModule,
+  ],
   templateUrl: './navbar.html',
   styleUrl: './navbar.css',
 })
@@ -18,19 +23,26 @@ export class Navbar {
 
   readonly currentUser$ = this.authService.currentUser$;
   readonly itemCount$ = this.cartService.itemCount$;
-  readonly userInitial = (user: User): string => user.fullName.charAt(0).toUpperCase();
-  readonly isAdminUser = (user: User): boolean => user.role.toLowerCase() === 'admin';
+  readonly userInitial = (user: User): string =>
+    user.fullName.charAt(0).toUpperCase();
+  readonly isAdminUser = (user: User): boolean =>
+    user.role.toLowerCase() === 'admin';
 
-  isScrolled  = false;
+  isScrolled = false;
   isMobileOpen = false;
 
   @HostListener('window:scroll')
   onScroll(): void {
-    this.isScrolled = window.scrollY > 40;
+    this.isScrolled = window.scrollY > 24;
   }
 
-  toggleMobile(): void  { this.isMobileOpen = !this.isMobileOpen; }
-  closeMobile(): void   { this.isMobileOpen = false; }
+  toggleMobile(): void {
+    this.isMobileOpen = !this.isMobileOpen;
+  }
+
+  closeMobile(): void {
+    this.isMobileOpen = false;
+  }
 
   logout(): void {
     this.authService.logout();
@@ -41,5 +53,3 @@ export class Navbar {
     return this.isScrolled ? 'navbar navbar--scrolled' : 'navbar';
   }
 }
-
-

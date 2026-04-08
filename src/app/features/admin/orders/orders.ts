@@ -16,6 +16,7 @@ import {
   DEFAULT_PAGE,
   SEARCH_DEBOUNCE_MS,
 } from "../../../core/constants/app.constants";
+import { LucideAngularModule } from "lucide-angular";
 
 const STATUS_FILTER_OPTIONS: { value: string; label: string }[] = [
   { value: "", label: "All Statuses" },
@@ -31,7 +32,7 @@ const STATUS_FILTER_OPTIONS: { value: string; label: string }[] = [
 @Component({
   selector: "app-orders",
   standalone: true,
-  imports: [CommonModule, RouterModule, ReactiveFormsModule, Loading],
+  imports: [CommonModule, RouterModule, ReactiveFormsModule, Loading, LucideAngularModule],
   templateUrl: "./orders.html",
   styleUrl: "./orders.css",
 })

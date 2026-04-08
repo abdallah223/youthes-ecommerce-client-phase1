@@ -13,8 +13,11 @@
         @for (item of items; track item.question; let index = $index) {
           <div [class]="isOpen(index) ? 'faq-item faq-item--open' : 'faq-item'">
             <button class="faq-item__question" (click)="toggle(index)">
-              <span>{{ item.question }}</span>
-              <span class="faq-item__icon">{{ isOpen(index) ? '-' : '+' }}</span>
+              <span class="faq-item__question-text">
+                <lucide-angular name="circle-help" [size]="16"></lucide-angular>
+                <span>{{ item.question }}</span>
+              </span>
+              <lucide-angular class="faq-item__icon" [name]="isOpen(index) ? 'chevron-up' : 'chevron-down'" [size]="18"></lucide-angular>
             </button>
 
             <div class="faq-item__answer-wrap">
@@ -33,5 +36,9 @@
   <div class="faq-contact">
     <p class="faq-contact__title">Still have questions?</p>
     <p class="faq-contact__sub">Reach out to us and we'll get back to you as soon as possible.</p>
+    <a routerLink="/contact" class="btn btn--primary btn--sm faq-contact__action">
+      Contact Us
+      <lucide-angular name="arrow-right" [size]="16"></lucide-angular>
+    </a>
   </div>
 </div>

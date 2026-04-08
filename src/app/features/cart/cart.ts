@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { LucideAngularModule } from 'lucide-angular';
 import { firstValueFrom } from 'rxjs';
 import { AuthService } from '../../core/services/auth.service';
 import { CartService } from '../../core/services/cart.service';
@@ -17,7 +18,7 @@ export interface GuestCartDisplayItem {
 @Component({
   selector: 'app-cart',
   standalone: true,
-  imports: [CommonModule, RouterModule, Loading],
+  imports: [CommonModule, RouterModule, Loading, LucideAngularModule],
   templateUrl: './cart.html',
   styleUrl: './cart.css',
 })

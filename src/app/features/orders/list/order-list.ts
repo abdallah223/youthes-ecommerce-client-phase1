@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { LucideAngularModule } from 'lucide-angular';
 import { BehaviorSubject, map, switchMap } from 'rxjs';
 import { DEFAULT_PAGE } from '../../../core/constants/app.constants';
 import { Order, PaginationMeta } from '../../../core/models';
@@ -16,7 +17,7 @@ interface OrdersState {
 @Component({
   selector: 'app-order-list',
   standalone: true,
-  imports: [CommonModule, RouterModule, Loading, Pagination],
+  imports: [CommonModule, RouterModule, Loading, Pagination, LucideAngularModule],
   templateUrl: './order-list.html',
   styleUrl: './order-list.css',
 })

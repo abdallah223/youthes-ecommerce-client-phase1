@@ -22,6 +22,15 @@
   flex-shrink: 0;
 }
 
+.profile-eyebrow {
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin-bottom: var(--space-2);
+}
+
 .profile-name {
   font-family: var(--font-display);
   font-size: var(--text-2xl);
@@ -117,6 +126,12 @@
 
 .profile-link:last-child { border-bottom: none; }
 .profile-link:hover      { color: var(--color-text); }
+
+.profile-link__content {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
 
 .profile-link__arrow {
   transition: transform var(--transition-fast);

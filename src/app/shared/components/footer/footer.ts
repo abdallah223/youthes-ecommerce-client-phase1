@@ -1,14 +1,19 @@
-import { Component, inject } from "@angular/core";
-import { RouterModule } from "@angular/router";
-import { AsyncPipe } from "@angular/common";
-import { AuthService } from "../../../core/services/auth.service";
+import { AsyncPipe } from '@angular/common';
+import { Component, inject } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { LucideAngularModule } from 'lucide-angular';
+import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
-  selector: "app-footer",
+  selector: 'app-footer',
   standalone: true,
-  imports: [RouterModule, AsyncPipe],
-  templateUrl: "./footer.html",
-  styleUrl: "./footer.css",
+  imports: [
+    RouterModule,
+    AsyncPipe,
+    LucideAngularModule,
+  ],
+  templateUrl: './footer.html',
+  styleUrl: './footer.css',
 })
 export class Footer {
   readonly currentYear = new Date().getFullYear();
