@@ -3,7 +3,6 @@
     <h1 class="admin-page-title">Sales Report</h1>
   </div>
 
-  <!-- Date filter -->
   <div class="report-filter" [formGroup]="form">
     <div class="form-group">
       <label class="form-label">From</label>
@@ -30,7 +29,6 @@
 
   @if (!isLoading && report) {
 
-    <!-- Summary stats -->
     <div class="admin-stats-grid">
       <div class="stat-card">
         <p class="stat-card__label">Total Revenue</p>
@@ -47,7 +45,6 @@
       </div>
     </div>
 
-    <!-- Top products -->
     <div class="admin-table-wrap">
       <div class="report-table-header">
         <h2 class="report-table-title">Top Products by Units Sold</h2>

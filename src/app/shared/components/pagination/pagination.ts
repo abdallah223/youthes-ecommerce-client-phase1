@@ -1,13 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { LucideAngularModule } from 'lucide-angular';
+import { LucideIconsModule } from '../../lucide-icons.module';
 
 @Component({
   selector: 'app-pagination',
   standalone: true,
   imports: [
     CommonModule,
-    LucideAngularModule,
+    LucideIconsModule,
   ],
   templateUrl: './pagination.html',
   styleUrl: './pagination.css',

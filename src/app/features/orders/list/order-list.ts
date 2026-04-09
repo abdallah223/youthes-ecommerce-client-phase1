@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { LucideAngularModule } from 'lucide-angular';
+import { LucideIconsModule } from '../../../shared/lucide-icons.module';
 import { BehaviorSubject, map, switchMap } from 'rxjs';
 import { DEFAULT_PAGE } from '../../../core/constants/app.constants';
 import { Order, PaginationMeta } from '../../../core/models';
@@ -17,7 +17,7 @@ interface OrdersState {
 @Component({
   selector: 'app-order-list',
   standalone: true,
-  imports: [CommonModule, RouterModule, Loading, Pagination, LucideAngularModule],
+  imports: [CommonModule, RouterModule, Loading, Pagination, LucideIconsModule],
   templateUrl: './order-list.html',
   styleUrl: './order-list.css',
 })
@@ -44,9 +44,5 @@ export class OrderList {
 
   getStatusClass(status: string): string {
     return this.orderService.getStatusClass(status);
-  }
-
-  trackByOrderId(_index: number, order: Order): string {
-    return order._id;
   }
 }

@@ -55,7 +55,6 @@ export const routes: Routes = [
       import("./features/auth/register/register").then((m) => m.Register),
   },
   {
-    // ✅ No authGuard — guests can view their cart
     path: "cart",
     loadComponent: () => import("./features/cart/cart").then((m) => m.Cart),
   },

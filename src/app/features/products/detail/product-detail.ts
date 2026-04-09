@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { firstValueFrom, map, Observable } from 'rxjs';
-import { LucideAngularModule } from 'lucide-angular';
+import { LucideIconsModule } from '../../../shared/lucide-icons.module';
 import {
   LOW_STOCK_THRESHOLD,
   SUCCESS_FLASH_MS,
@@ -21,7 +21,7 @@ import { Loading } from '../../../shared/components/loading/loading';
     CommonModule,
     RouterModule,
     Loading,
-    LucideAngularModule,
+    LucideIconsModule,
   ],
   templateUrl: './product-detail.html',
   styleUrl: './product-detail.css',

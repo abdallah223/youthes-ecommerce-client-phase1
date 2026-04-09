@@ -1,5 +1,3 @@
-/* ── Auth ────────────────────────────────────────────────────── */
-
 export interface User {
   _id: string;
   fullName: string;
@@ -33,8 +31,6 @@ export interface AuthResponse {
   data: { user: User; token: string };
 }
 
-/* ── Category ────────────────────────────────────────────────── */
-
 export interface Subcategory {
   _id: string;
   name: string;
@@ -51,15 +47,13 @@ export interface Category {
   subcategories: Subcategory[];
 }
 
-/* ── Product ─────────────────────────────────────────────────── */
-
 export interface Product {
   _id: string;
   name: string;
   slug: string;
   description: string;
   price: number;
-  image: string; // filename — use ProductService.getImageUrl()
+  image: string;
   category: { _id: string; name: string; slug: string };
   subcategory?: { _id: string; name: string; slug: string };
   stockCount: number;
@@ -82,8 +76,6 @@ export interface ProductQuery {
   search?: string;
   sort?: string;
 }
-
-/* ── Cart ────────────────────────────────────────────────────── */
 
 export interface CartProduct {
   _id: string;
@@ -115,8 +107,6 @@ export interface GuestCartItem {
   productId: string;
   quantity: number;
 }
-
-/* ── Order ───────────────────────────────────────────────────── */
 
 export type OrderStatus =
   | "Pending"
@@ -158,8 +148,6 @@ export interface CreateOrderPayload {
   deliveryAddress: string;
 }
 
-/* ── Testimonial ─────────────────────────────────────────────── */
-
 export interface Testimonial {
   _id: string;
   user: string | User;
@@ -170,12 +158,11 @@ export interface Testimonial {
   createdAt: string;
 }
 
-/* ── Static pages ────────────────────────────────────────────── */
-
 export interface AboutUsContent {
   title: string;
   body: string;
 }
+
 export interface FaqItem {
   question: string;
   answer: string;
@@ -186,6 +173,7 @@ export interface StaticPage {
   pageKey: "about_us" | "faq" | "contact_us";
   content: AboutUsContent | FaqItem[] | ContactUsContent;
 }
+
 export interface ContactUsContent {
   phone: string;
   email: string;
@@ -193,8 +181,6 @@ export interface ContactUsContent {
   workingHours: string;
   socialLinks: { label: string; url: string }[];
 }
-
-/* ── Generic API wrappers ────────────────────────────────────── */
 
 export interface ApiResponse<T> {
   success: boolean;
@@ -217,8 +203,6 @@ export interface PaginationMeta {
   hasNextPage?: boolean;
   hasPrevPage?: boolean;
 }
-
-//Admin specific models
 
 export interface NotificationCounts {
   newOrders: number;

@@ -52,8 +52,6 @@ export class CartService {
       .subscribe();
   }
 
-  /* ── Server cart ─────────────────────────────────────── */
-
   loadCart(): Observable<ApiResponse<Cart>> {
     return this.http
       .get<ApiResponse<Cart>>(this.api)
@@ -107,8 +105,6 @@ export class CartService {
       .pipe(tap((res) => this.setServerCart(res.data)));
   }
 
-  /* ── Guest cart (localStorage) ───────────────────────── */
-
   getGuestCart(): GuestCartItem[] {
     try {
       const raw = localStorage.getItem(STORAGE_KEYS.GUEST_CART);
@@ -146,8 +142,6 @@ export class CartService {
   hasGuestCart(): boolean {
     return this.getGuestCart().length > 0;
   }
-
-  /* ── Private helpers ─────────────────────────────────── */
 
   private setServerCart(cart: Cart): void {
     this.cartSubject.next(cart);

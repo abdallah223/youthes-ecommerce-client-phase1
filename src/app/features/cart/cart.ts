@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { LucideAngularModule } from 'lucide-angular';
+import { LucideIconsModule } from '../../shared/lucide-icons.module';
 import { firstValueFrom } from 'rxjs';
 import { AuthService } from '../../core/services/auth.service';
 import { CartService } from '../../core/services/cart.service';
@@ -18,7 +18,7 @@ export interface GuestCartDisplayItem {
 @Component({
   selector: 'app-cart',
   standalone: true,
-  imports: [CommonModule, RouterModule, Loading, LucideAngularModule],
+  imports: [CommonModule, RouterModule, Loading, LucideIconsModule],
   templateUrl: './cart.html',
   styleUrl: './cart.css',
 })
@@ -106,11 +106,6 @@ export class Cart implements OnInit {
   isItemUpdating(item: CartItem): boolean {
     return this.updatingProductId === item.product._id;
   }
-
-  trackByProductId(_index: number, item: CartItem): string {
-    return item.product._id;
-  }
-
   private async buildGuestDisplay(): Promise<void> {
     const guestItems = this.cartService.getGuestCart();
     if (!guestItems.length) {

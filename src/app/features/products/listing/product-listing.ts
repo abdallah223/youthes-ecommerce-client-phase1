@@ -5,7 +5,7 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { firstValueFrom, map, switchMap } from 'rxjs';
-import { LucideAngularModule } from 'lucide-angular';
+import { LucideIconsModule } from '../../../shared/lucide-icons.module';
 import { AuthService } from '../../../core/services/auth.service';
 import { CartService } from '../../../core/services/cart.service';
 import { CategoryService } from '../../../core/services/category.service';
@@ -42,7 +42,7 @@ interface ProductsState {
     ProductCard,
     Pagination,
     Loading,
-    LucideAngularModule,
+    LucideIconsModule,
   ],
   templateUrl: './product-listing.html',
   styleUrl: './product-listing.css',

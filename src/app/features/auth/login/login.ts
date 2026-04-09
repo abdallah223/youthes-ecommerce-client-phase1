@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { LucideAngularModule } from 'lucide-angular';
+import { LucideIconsModule } from '../../../shared/lucide-icons.module';
 import { firstValueFrom } from 'rxjs';
 import { AuthService } from '../../../core/services/auth.service';
 import { CartService } from '../../../core/services/cart.service';
@@ -11,7 +11,7 @@ import { CartService } from '../../../core/services/cart.service';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterModule, LucideAngularModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule, LucideIconsModule],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })

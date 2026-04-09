@@ -13,12 +13,12 @@ import {
   CANCELLED_STATUSES,
   ORDER_PROGRESS_STEPS,
 } from '../../../../core/constants/app.constants';
-import { LucideAngularModule } from 'lucide-angular';
+import { LucideIconsModule } from '../../../../shared/lucide-icons.module';
 
 @Component({
   selector: 'app-order-detail',
   standalone: true,
-  imports: [CommonModule, RouterModule, ReactiveFormsModule, Loading, LucideAngularModule],
+  imports: [CommonModule, RouterModule, ReactiveFormsModule, Loading, LucideIconsModule],
   templateUrl: './order-detail.html',
   styleUrl: './order-detail.css',
 })

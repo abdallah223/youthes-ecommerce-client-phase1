@@ -1,13 +1,10 @@
-/* ── Top row: About + FAQ ────────────────────────────── */
 .pages-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 20px;
   align-items: start;
-  margin-bottom: 20px;
 }
 
-/* ── Shared section card ─────────────────────────────── */
 .page-section {
   background: var(--color-white);
   border: 1px solid var(--color-border);
@@ -15,12 +12,12 @@
   padding: 20px;
 }
 
-/* ── Contact: full width, 2-col fields inside ────────── */
 .page-section--contact {
   background: var(--color-white);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
   padding: 20px;
+  margin-bottom: 20px;
 }
 
 .contact-fields-grid {
@@ -35,7 +32,6 @@
   font-family: var(--font-body);
 }
 
-/* ── Section header (FAQ title + button) ─────────────── */
 .page-section__header {
   display: flex;
   align-items: center;
@@ -61,14 +57,12 @@
   border-bottom: none;
 }
 
-/* ── About textarea ──────────────────────────────────── */
 .page-textarea {
   resize: vertical;
   min-height: 120px;
   font-family: var(--font-body);
 }
 
-/* ── FAQ items ───────────────────────────────────────── */
 .faq-items {
   display: flex;
   flex-direction: column;
@@ -103,7 +97,6 @@
   color: var(--color-error);
 }
 
-/* ── Responsive ──────────────────────────────────────── */
 @media (max-width: 1024px) {
   .contact-fields-grid {
     grid-template-columns: 1fr;
@@ -114,24 +107,8 @@
   .pages-grid {
     grid-template-columns: 1fr;
   }
+
   .contact-fields-grid {
     grid-template-columns: 1fr;
   }
-}
-
-/* ── Contact: full width, above the grid ────────────── */
-.page-section--contact {
-  background: var(--color-white);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  padding: 20px;
-  margin-bottom: 20px; /* ← moved here from .pages-grid */
-}
-
-/* ── Bottom row: About + FAQ ─────────────────────────── */
-.pages-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-  align-items: start;
 }

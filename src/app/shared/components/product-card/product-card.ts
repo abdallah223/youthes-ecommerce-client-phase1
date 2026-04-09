@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { LucideAngularModule } from 'lucide-angular';
+import { LucideIconsModule } from '../../lucide-icons.module';
 import { LOW_STOCK_THRESHOLD } from '../../../core/constants/app.constants';
 import { Product } from '../../../core/models';
 import { ProductService } from '../../../core/services/product.service';
@@ -12,7 +12,7 @@ import { ProductService } from '../../../core/services/product.service';
   imports: [
     CommonModule,
     RouterModule,
-    LucideAngularModule,
+    LucideIconsModule,
   ],
   templateUrl: './product-card.html',
   styleUrl: './product-card.css',

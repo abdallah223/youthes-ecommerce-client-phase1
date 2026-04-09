@@ -1,7 +1,7 @@
 import { AsyncPipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { LucideAngularModule } from 'lucide-angular';
+import { LucideIconsModule } from '../../lucide-icons.module';
 import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
@@ -10,7 +10,7 @@ import { AuthService } from '../../../core/services/auth.service';
   imports: [
     RouterModule,
     AsyncPipe,
-    LucideAngularModule,
+    LucideIconsModule,
   ],
   templateUrl: './footer.html',
   styleUrl: './footer.css',

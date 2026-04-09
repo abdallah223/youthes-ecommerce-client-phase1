@@ -1,7 +1,7 @@
 import { Component, inject } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { map } from "rxjs/operators";
-import { LucideAngularModule } from 'lucide-angular';
+import { LucideIconsModule } from '../../../shared/lucide-icons.module';
 import { StaticPagesService } from "../../../core/services/static-pages.service";
 import { ContactUsContent } from "../../../core/models";
 import { Loading } from "../../../shared/components/loading/loading";
@@ -9,7 +9,7 @@ import { Loading } from "../../../shared/components/loading/loading";
 @Component({
   selector: "app-contact",
   standalone: true,
-  imports: [CommonModule, Loading, LucideAngularModule],
+  imports: [CommonModule, Loading, LucideIconsModule],
   templateUrl: "./contact.html",
   styleUrl: "./contact.css",
 })

@@ -42,7 +42,6 @@
     </div>
   }
 
-  <!-- Modal -->
   @if (modalMode) {
     <div class="admin-modal-backdrop" (click)="closeModal()">
       <div class="admin-modal" (click)="$event.stopPropagation()" [formGroup]="nameForm">

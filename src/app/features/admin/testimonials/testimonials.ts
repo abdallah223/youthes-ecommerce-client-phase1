@@ -6,7 +6,7 @@ import { AdminTestimonialService } from '../../../core/services/admin-testimonia
 import { Testimonial, PaginationMeta } from '../../../core/models';
 import { Loading } from '../../../shared/components/loading/loading';
 import { DEFAULT_PAGE, TESTIMONIAL_ACTION_OPTIONS } from '../../../core/constants/app.constants';
-import { LucideAngularModule } from 'lucide-angular';
+import { LucideIconsModule } from '../../../shared/lucide-icons.module';
 
 const STATUS_FILTER_OPTIONS = [
   { value: '',         label: 'All'      },
@@ -19,7 +19,7 @@ const STATUS_FILTER_OPTIONS = [
 @Component({
   selector: 'app-testimonials',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, Loading, LucideAngularModule],
+  imports: [CommonModule, ReactiveFormsModule, Loading, LucideIconsModule],
   templateUrl: './testimonials.html',
   styleUrl: './testimonials.css',
 })

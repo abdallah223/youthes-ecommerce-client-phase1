@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { firstValueFrom, map } from 'rxjs';
-import { LucideAngularModule } from 'lucide-angular';
+import { LucideIconsModule } from '../../shared/lucide-icons.module';
 import {
   MAX_HOME_FEATURED,
   MAX_HOME_TESTIMONIALS,
@@ -23,7 +23,7 @@ import { ProductCard } from '../../shared/components/product-card/product-card';
     RouterModule,
     ProductCard,
     Loading,
-    LucideAngularModule,
+    LucideIconsModule,
   ],
   templateUrl: './home.html',
   styleUrl: './home.css',

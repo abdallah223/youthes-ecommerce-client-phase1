@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
-import { LucideAngularModule } from 'lucide-angular';
+import { LucideIconsModule } from '../../../shared/lucide-icons.module';
 import { Subscription } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { NotificationCounts } from '../../../core/models';
@@ -31,7 +31,7 @@ const NAV_ITEMS: NavItem[] = [
   imports: [
     CommonModule,
     RouterModule,
-    LucideAngularModule,
+    LucideIconsModule,
   ],
   templateUrl: './admin-layout.html',
   styleUrl: './admin-layout.css',

@@ -8,7 +8,7 @@ import { AdminProductService } from "../../../../core/services/admin-product.ser
 import { AdminCategoryService } from "../../../../core/services/admin-category.service";
 import { Category, Product } from "../../../../core/models";
 import { Loading } from "../../../../shared/components/loading/loading";
-import { LucideAngularModule } from "lucide-angular";
+import { LucideIconsModule } from "../../../../shared/lucide-icons.module";
 
 const MAX_IMAGE_SIZE_MB = 2;
 const MAX_IMAGE_SIZE_BYTES = MAX_IMAGE_SIZE_MB * 1024 * 1024;
@@ -22,7 +22,7 @@ const ALLOWED_IMAGE_TYPES = [
 @Component({
   selector: "app-product-form",
   standalone: true,
-  imports: [CommonModule, RouterModule, ReactiveFormsModule, Loading, LucideAngularModule],
+  imports: [CommonModule, RouterModule, ReactiveFormsModule, Loading, LucideIconsModule],
   templateUrl: "./product-form.html",
   styleUrl: "./product-form.css",
 })
@@ -66,7 +66,6 @@ export class ProductForm implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    // Read product passed via router state (set by products list on Edit click)
     const product = history.state?.product as Product | undefined;
 
     if (product) {
@@ -79,7 +78,6 @@ export class ProductForm implements OnInit, OnDestroy {
         subcategory: product.subcategory?._id ?? "",
       });
 
-      // Show current image as preview
       this.imagePreview = this.productService.getImageUrl(product.image);
     }
   }

@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, HostListener, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { LucideAngularModule } from 'lucide-angular';
+import { LucideIconsModule } from '../../lucide-icons.module';
 import { User } from '../../../core/models';
 import { AuthService } from '../../../core/services/auth.service';
 import { CartService } from '../../../core/services/cart.service';
@@ -12,7 +12,7 @@ import { CartService } from '../../../core/services/cart.service';
   imports: [
     CommonModule,
     RouterModule,
-    LucideAngularModule,
+    LucideIconsModule,
   ],
   templateUrl: './navbar.html',
   styleUrl: './navbar.css',

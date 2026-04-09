@@ -8,12 +8,12 @@ import { Order } from '../../../core/models';
 import { OrderService } from '../../../core/services/order.service';
 import { ProductService } from '../../../core/services/product.service';
 import { Loading } from '../../../shared/components/loading/loading';
-import { LucideAngularModule } from 'lucide-angular';
+import { LucideIconsModule } from '../../../shared/lucide-icons.module';
 
 @Component({
   selector: 'app-order-detail',
   standalone: true,
-  imports: [CommonModule, RouterModule, Loading, LucideAngularModule],
+  imports: [CommonModule, RouterModule, Loading, LucideIconsModule],
   templateUrl: './order-detail.html',
   styleUrl: './order-detail.css',
 })

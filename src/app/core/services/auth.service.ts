@@ -24,35 +24,34 @@ import {
 export class AuthService {
   private readonly http = inject(HttpClient);
   private readonly router = inject(Router);
-
   private readonly api = `${environment.apiUrl}/auth`;
 
   private readonly currentUserSubject = new BehaviorSubject<User | null>(
     this.loadUserFromStorage(),
   );
 
-  /* ── Observables for templates (async pipe) ────────────────── */
   readonly currentUser$: Observable<User | null> =
     this.currentUserSubject.asObservable();
   readonly isLoggedIn$: Observable<boolean> = this.currentUser$.pipe(
     map((u) => !!u),
   );
 
-  /* ── Synchronous accessors for guards and interceptors ─────── */
   isLoggedIn(): boolean {
     return !!this.currentUserSubject.value;
   }
+
   isAdmin(): boolean {
     return this.currentUserSubject.value?.role?.toLowerCase() === "admin";
   }
+
   getToken(): string | null {
     return localStorage.getItem(STORAGE_KEYS.TOKEN);
   }
+
   getCurrentUser(): User | null {
     return this.currentUserSubject.value;
   }
 
-  /* ── Auth actions ──────────────────────────────────────────── */
   login(payload: LoginPayload): Observable<AuthResponse> {
     return this.http
       .post<AuthResponse>(`${this.api}/login`, payload)
@@ -82,7 +81,6 @@ export class AuthService {
     this.endSession();
   }
 
-  /* ── Private helpers ───────────────────────────────────────── */
   private saveSession(token: string, user: User): void {
     localStorage.setItem(STORAGE_KEYS.TOKEN, token);
     localStorage.setItem(STORAGE_KEYS.USER, JSON.stringify(user));

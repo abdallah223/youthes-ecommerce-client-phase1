@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { LucideAngularModule } from 'lucide-angular';
+import { LucideIconsModule } from '../../shared/lucide-icons.module';
 import { firstValueFrom } from 'rxjs';
 import { AuthService } from '../../core/services/auth.service';
 import { CartService } from '../../core/services/cart.service';
@@ -17,7 +17,7 @@ const MIN_ADDRESS_LENGTH = 10;
 @Component({
   selector: 'app-checkout',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterModule, Loading, LucideAngularModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule, Loading, LucideIconsModule],
   templateUrl: './checkout.html',
   styleUrl: './checkout.css',
 })

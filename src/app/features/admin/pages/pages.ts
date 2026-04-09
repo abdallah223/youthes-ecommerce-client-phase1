@@ -16,12 +16,12 @@ import {
 import { Loading } from "../../../shared/components/loading/loading";
 import { SUCCESS_FLASH_MS } from "../../../core/constants/app.constants";
 import { HttpErrorResponse } from "@angular/common/http";
-import { LucideAngularModule } from "lucide-angular";
+import { LucideIconsModule } from "../../../shared/lucide-icons.module";
 
 @Component({
   selector: "app-pages",
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, Loading, LucideAngularModule],
+  imports: [CommonModule, ReactiveFormsModule, Loading, LucideIconsModule],
   templateUrl: "./pages.html",
   styleUrl: "./pages.css",
 })

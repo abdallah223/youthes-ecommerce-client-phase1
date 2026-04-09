@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { LucideAngularModule } from 'lucide-angular';
+import { LucideIconsModule } from '../../../shared/lucide-icons.module';
 import { Subscription, forkJoin } from 'rxjs';
 import { DEFAULT_PAGE } from '../../../core/constants/app.constants';
 import { NotificationCounts, Order } from '../../../core/models';
@@ -15,7 +15,7 @@ import { Loading } from '../../../shared/components/loading/loading';
     CommonModule,
     RouterModule,
     Loading,
-    LucideAngularModule,
+    LucideIconsModule,
   ],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css',
