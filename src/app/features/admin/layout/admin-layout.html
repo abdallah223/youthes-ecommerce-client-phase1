@@ -1,9 +1,12 @@
 <div class="admin-shell theme-admin">
   <aside [class]="isSidebarOpen ? 'admin-sidebar admin-sidebar--open' : 'admin-sidebar'">
     <div class="admin-sidebar__brand">
-      <div class="admin-sidebar__brand-mark">Y</div>
+      <a routerLink="/" class="admin-sidebar__brand-link" aria-label="Youthes home">
+        <span class="admin-sidebar__logo-shell">
+          <img src="assets/youthes-logo.svg" alt="Youthes" class="admin-sidebar__logo-image" />
+        </span>
+      </a>
       <div>
-        <span class="admin-sidebar__logo">Youthes</span>
         <span class="admin-sidebar__label">Control Room</span>
       </div>
     </div>

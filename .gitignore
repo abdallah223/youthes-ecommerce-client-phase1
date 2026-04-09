@@ -3,6 +3,7 @@ dist/
 tmp/
 out-tsc/
 bazel-out/
+.angular/
 
 .idea/
 .project/

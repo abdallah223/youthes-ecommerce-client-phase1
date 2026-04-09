@@ -2,9 +2,21 @@
   min-height: calc(100vh - var(--navbar-height));
   padding: var(--space-10) var(--space-4);
   background:
-    radial-gradient(circle at top left, rgba(202, 107, 44, 0.14), transparent 34%),
-    radial-gradient(circle at bottom right, rgba(21, 111, 114, 0.12), transparent 38%),
-    linear-gradient(160deg, rgba(255, 250, 244, 0.94) 0%, rgba(236, 224, 209, 0.86) 100%);
+    radial-gradient(
+      circle at top left,
+      rgba(202, 107, 44, 0.14),
+      transparent 34%
+    ),
+    radial-gradient(
+      circle at bottom right,
+      rgba(21, 111, 114, 0.12),
+      transparent 38%
+    ),
+    linear-gradient(
+      160deg,
+      rgba(255, 250, 244, 0.94) 0%,
+      rgba(236, 224, 209, 0.86) 100%
+    );
 }
 
 .auth-shell {
@@ -26,7 +38,11 @@
 
 .auth-intro {
   padding: clamp(2rem, 4vw, 3.5rem);
-  background: linear-gradient(145deg, rgba(17, 13, 9, 0.92) 0%, rgba(61, 51, 42, 0.84) 100%);
+  background: linear-gradient(
+    145deg,
+    rgba(17, 13, 9, 0.92) 0%,
+    rgba(61, 51, 42, 0.84) 100%
+  );
   color: rgba(255, 250, 244, 0.96);
   display: flex;
   flex-direction: column;
@@ -49,6 +65,7 @@
   line-height: 0.95;
   letter-spacing: var(--tracking-tight);
   max-width: 10ch;
+  color: var(--color-white);
 }
 
 .auth-copy {
@@ -88,6 +105,7 @@
   font-size: var(--text-sm);
   font-weight: var(--weight-semibold);
   margin-bottom: 0.2rem;
+  color: var(--color-white);
 }
 
 .auth-highlight__text {
@@ -128,8 +146,12 @@
   gap: var(--space-5);
 }
 
-.input-wrap { position: relative; }
-.input-wrap .form-input { padding-right: 56px; }
+.input-wrap {
+  position: relative;
+}
+.input-wrap .form-input {
+  padding-right: 56px;
+}
 
 .input-toggle {
   position: absolute;
@@ -146,7 +168,9 @@
   transition: color var(--transition-fast);
 }
 
-.input-toggle:hover { color: var(--color-text); }
+.input-toggle:hover {
+  color: var(--color-text);
+}
 
 .auth-footer {
   text-align: left;
@@ -161,7 +185,9 @@
   transition: color var(--transition-fast);
 }
 
-.auth-link:hover { color: var(--color-accent-dark); }
+.auth-link:hover {
+  color: var(--color-accent-dark);
+}
 
 @media (max-width: 900px) {
   .auth-shell {

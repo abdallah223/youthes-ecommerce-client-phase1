@@ -179,7 +179,7 @@
 .admin-filter-select:focus,
 .search-input:focus,
 .toolbar__sort:focus {
-  background: var(--color-white);
+  /* background: var(--color-white); */
   border-color: var(--color-accent);
   box-shadow: 0 0 0 4px rgba(202, 107, 44, 0.12);
 }
@@ -350,7 +350,12 @@
 }
 
 .skeleton {
-  background: linear-gradient(90deg, rgba(255, 255, 255, 0.08) 25%, rgba(255, 255, 255, 0.36) 50%, rgba(255, 255, 255, 0.08) 75%);
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.08) 25%,
+    rgba(255, 255, 255, 0.36) 50%,
+    rgba(255, 255, 255, 0.08) 75%
+  );
   background-size: 800px 100%;
   animation: shimmer 1.8s infinite linear;
   border-radius: var(--radius-md);
