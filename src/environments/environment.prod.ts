@@ -1,7 +1,5 @@
 export const environment = {
   production: true,
-  apiUrl:     'https://your-api-domain.com/api/v1',
-  uploadsUrl: 'https://your-api-domain.com/uploads',
+  apiUrl: "https://youthes-api.duckdns.org/api/v1",
+  uploadsUrl: "https://youthes-api.duckdns.org/uploads",
 };
-
-
