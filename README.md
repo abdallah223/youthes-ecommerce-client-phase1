@@ -1,6 +1,25 @@
 # Youthes Store Client
 
+![Angular](https://img.shields.io/badge/Angular-21-red?logo=angular)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.9-blue?logo=typescript)
+![RxJS](https://img.shields.io/badge/RxJS-Reactive-purple?logo=reactivex)
+![Node](https://img.shields.io/badge/Node.js-Backend-green?logo=node.js)
+![Vercel](https://img.shields.io/badge/Deployed-Vercel-black?logo=vercel)
+![License](https://img.shields.io/badge/License-MIT-lightgrey)
+
 Frontend client for the Youthes e-commerce platform. This Angular application powers the public storefront, customer account flows, checkout experience, and an admin dashboard for managing catalog and store operations.
+
+
+## 🔗 Live Links
+
+- 🌐 **Client Live Demo**  
+  https://youthes-ecommerce-client-phase1.vercel.app/
+
+- 📚 **Backend API Documentation (Swagger)**  
+  https://youthes-api.duckdns.org/docs/
+
+- 🛠 **Backend Repository**  
+  https://github.com/abdallah223/youthes-ecommerce-backend-phase1
 
 ## Table of Contents
 
