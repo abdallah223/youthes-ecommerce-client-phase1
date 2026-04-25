@@ -20,6 +20,22 @@ Frontend client for the Youthes e-commerce platform. This Angular application po
 
 - 🛠 **Backend Repository**  
   https://github.com/abdallah223/youthes-ecommerce-backend-phase1
+  
+## 📸 Screenshots
+
+### 🖥️ Homepage
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/21fc3075-b53a-4676-9ac2-425f03f326d9" width="90%" alt="Main View" />
+</div>
+
+### 📱 Admin Panel & Management
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/46adae8a-4f45-457d-a32c-48cb767f93df" width="48%" alt="Product Details" />
+  <img src="https://github.com/user-attachments/assets/fc13d960-63ef-4cdd-8b34-eced6100f9cb" width="48%" alt="Product Management" />
+</div>
+
+
+
 
 ## Table of Contents
 
@@ -280,4 +296,6 @@ Deployment checklist:
 3. Serve the generated `dist/youthes-store/browser` output from your hosting platform if your Angular builder emits the browser subfolder.
 4. Configure your server to redirect unknown routes to `index.html` so Angular routing works on refresh.
 5. Verify API connectivity, image uploads, and authenticated routes in production.
+
+
 
