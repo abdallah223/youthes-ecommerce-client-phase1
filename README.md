@@ -281,9 +281,3 @@ Deployment checklist:
 4. Configure your server to redirect unknown routes to `index.html` so Angular routing works on refresh.
 5. Verify API connectivity, image uploads, and authenticated routes in production.
 
-## Known Gaps
-
-- There is currently no `test` script in `package.json`.
-- No lint script is defined in `package.json`.
-- The production API URL is still a placeholder and must be updated before release.
-- The client assumes the backend is the source of truth for authorization, product data, order state, and admin permissions.
